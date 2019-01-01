@@ -24,7 +24,6 @@ public static final String[] stringsQuerysArray= {SELECT,INSERT_INTO,UPDATE,DELE
  * @param query
  * @param subfix
  * @return String
- * 
  */
 	public static String buildingQuery(String prefix,String query, String subfix) {
 		String buildQuery="";
