@@ -27,7 +27,9 @@ public class Servidor extends Thread {
 	public Servidor(Socket cliente) {
 			this.socketCliente=cliente;
 	}
-	
+	/**
+	 *  
+	 */
 	public void openStreams() {
 		try {
 			if(socketCliente.isConnected()) {
@@ -42,6 +44,9 @@ public class Servidor extends Thread {
 		}
 	}
 	
+	/**
+	 * 
+	 */
 	public void closeStreams() {
 		try {
 			if(socketCliente.isClosed()) {
