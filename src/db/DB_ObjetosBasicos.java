@@ -19,7 +19,7 @@ public class DB_ObjetosBasicos extends ObjetosBasicos {
 		listaObjetosBasicos = new ArrayList<>();
 	}
 	
-	public ArrayList<ObjetosBasicos> mostrarObjetosBásicos() throws SQLException{
+	public ArrayList<ObjetosBasicos> mostrarObjetosBasicos() throws SQLException{
 		conexion.openConexion();
 		st = conexion.openConexion().createStatement();
 		rs = st.executeQuery("SELECT * FROM objetos_basicos");
