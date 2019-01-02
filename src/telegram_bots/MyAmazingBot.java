@@ -10,7 +10,7 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 	@Override
 	public String getBotUsername() {
 		// TODO Auto-generated method stub
-		return "d&d_bot";
+		return "";
 	}
 
 	@Override
@@ -22,7 +22,7 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 			String mensajeDeTexto = update.getMessage().getText();
 			//localizamos el identificador del chat  y se lo asignamos a la variable de tipo long
 			long chat_id = update.getMessage().getChatId();
-			//creamos un objeto de tipo SendMessage y le añadimos el id y el texto que se ha enviado
+			//creamos un objeto de tipo SendMessage y le aÃ±adimos el id y el texto que se ha enviado
 			SendMessage enviarMensaje = new SendMessage().setChatId(chat_id).setText(mensajeDeTexto);
 			
 			try {
@@ -39,7 +39,7 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 	@Override
 	public String getBotToken() {
 		// TODO Auto-generated method stub
-		return "711497116:AAGrvRTIPFX6hPNtvF0CJeJPfcMKcOjVkto";
+		return "";
 	}
 
 }
