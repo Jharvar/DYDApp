@@ -3,10 +3,8 @@ package comunicaciones;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Servidor extends Thread {
@@ -26,8 +24,11 @@ public class Servidor extends Thread {
 	 */
 	public Servidor(Socket cliente) {
 			this.socketCliente=cliente;
+			openStreams();
 	}
-	
+	/**
+	 * Abrimos los flujos de datos
+	 */
 	public void openStreams() {
 		try {
 			if(socketCliente.isConnected()) {
@@ -41,7 +42,9 @@ public class Servidor extends Thread {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Cerramos los flujos de datos
+	 */
 	public void closeStreams() {
 		try {
 			if(socketCliente.isClosed()) {
@@ -54,5 +57,9 @@ public class Servidor extends Thread {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+	}
+	
+	public void run() {
+		
 	}
 }
