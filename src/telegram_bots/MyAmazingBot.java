@@ -10,16 +10,24 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import clases.Armas;
 import db.DB_Armas;
+import db.DB_Tienda;
+import tools.Identificadores;
 
 public class MyAmazingBot extends TelegramLongPollingBot {
 
+	
+	private DB_Tienda tienda;
+	private ArrayList<Armas> armas2;
 	// Array harcodeados hasta hacer la conexion con jarvar
 	String[] armas = {"[001]-Espada larga", "[002]-Espada Corta", "[003]-Baston", "[004]-Arco Corto"};
 	String[] armaduras = {"[010]-Cuero", "[012]-Cuero tachonado", "[013]-Completa", "[014]-Placas"};
 	String[] categorias = {"armas", "armaduras", "magicos", "clase"};
+	
+	public MyAmazingBot() {
+		tienda = new DB_Tienda();
+	}
 
-	private ArrayList<Armas> armas2;
-
+	
 	
 	@Override
 	public String getBotUsername() {
@@ -45,7 +53,8 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 		}
 	}
 
-	public void tienda(String mensaje, long chat_id, Update update) {
+	public void tienda(String mensaje, long chat_id , Update update) {
+
 		// TIENDA (categorias)
 		if (mensaje.length() == 7) {
 			String[] jarvarArray = categorias; // <<-- Array Jarvar
@@ -107,6 +116,6 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 	
 	@Override
 	public String getBotToken() {
-		return "654542961:AAGZDxcg6owBy-P-3oAH8pxQr6ppDfcXe0U";
+		return Identificadores.KEY_API_JHARVAR;
 	}
 }

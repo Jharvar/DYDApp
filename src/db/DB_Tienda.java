@@ -18,6 +18,7 @@ public class DB_Tienda extends DB{
 	private ArrayList<Armas> listaArmas;
 	private ArrayList<Armaduras> listaArmaduras;
 	private ArrayList<ObjetosBasicos> listaObjetosBasicos;
+	
 	//Atributos de operaciones
 	private Conexion conexion;
 	private Statement st;
@@ -47,7 +48,7 @@ public class DB_Tienda extends DB{
 	/**
 	 * 
 	 * @param id_objeto
-	 * @return ArrayList <?>
+	 * @return ArrayList<?>
 	 * @throws SQLException
 	 */
 	
