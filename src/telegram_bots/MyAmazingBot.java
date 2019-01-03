@@ -6,6 +6,11 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class MyAmazingBot extends TelegramLongPollingBot {
+	// Array harcodeados hasta hacer la conexion con jarvar
+	String[] armas = {"[001]-Espada larga", "[002]-Espada Corta", "[003]-Baston", "[004]-Arco Corto"};
+	String[] armaduras = {"[010]-Cuero", "[012]-Cuero tachonado", "[013]-Completa", "[014]-Placas"};
+	String[] categorias = {"armas", "armaduras", "magicos", "clase"};
+	
 	@Override
 	public String getBotUsername() {
 		return "ZaiussBot";
@@ -18,54 +23,41 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 			System.out.println(chat_id);
 			String mensajeDeTexto = update.getMessage().getText();
 			if(mensajeDeTexto.substring(0,7).compareTo("/tienda")==0) {
-				if(mensajeDeTexto.length()==7) {
-					verCategorias(chat_id);
-				}
-				else if (mensajeDeTexto.length()==9) {
-					switch (mensajeDeTexto.substring(8,9)) {
-					case "1":
-						System.out.println("Categoria 1");
-						break;
-					case "2":
-						System.out.println("Categoria 2");
-						break;
-					default:
-						System.out.println("Fail");
-						break;
-					}
-				}	
+				tienda(mensajeDeTexto, chat_id);
 			}
 		}
 	}
 
-	public Boolean verCategorias(long chat_id) {
-		String[] categorias = {"armas", "armaduras", "magicos", "clase"};
-		String out = crearMensaje(categorias);
-		SendMessage enviarMensaje = new SendMessage();
-		enviarMensaje.enableHtml(true);
-		enviarMensaje.setChatId(chat_id).setText(out);
-		try {
-			execute(enviarMensaje);
-		}catch (TelegramApiException telegramException) {
-			telegramException.printStackTrace();
+	public void tienda(String mensaje, long chat_id) {
+		// TIENDA (categorias)
+		if (mensaje.length() == 7) {
+			String[] jarvarArray = categorias; // <<-- Array Jarvar
+			String salida = crearMensaje(jarvarArray);
+			enviarMensaje(chat_id, salida);
+		} 
+		
+		// TIENDA X
+		else if (mensaje.length() == 9) {
+			switch (mensaje.substring(8,9)) {
+			case "1":
+				System.out.println("Categoria 1");
+				String[] jarvarArrayArmas = armas; // <<-- Array Jarvar
+				String salidaArmas = crearMensaje(jarvarArrayArmas);
+				enviarMensaje(chat_id, salidaArmas);
+				break;
+			case "2":
+				System.out.println("Categoria 2");
+				String[] jarvarArrayArmaduras = armaduras; // <<-- Array Jarvar
+				String salidaArmaduras = crearMensaje(jarvarArrayArmaduras);
+				enviarMensaje(chat_id, salidaArmaduras);
+				break;
+			default:
+				System.out.println("Fail");
+				break;
+			}
 		}
-		return true;
 	}
-	
-	public Boolean verArmas(long chat_id) {
-		String[] armas = {"[001]-Espada larga - 100g", "[002]-Espada Corta - 50g", "[003]-Baston - 100", "[004]-Arco Corto - 50"};
-		String out = crearMensaje(armas);
-		SendMessage enviarMensaje = new SendMessage();
-		enviarMensaje.enableHtml(true);
-		enviarMensaje.setChatId(chat_id).setText(out);
-		try {
-			execute(enviarMensaje);
-		}catch (TelegramApiException telegramException) {
-			telegramException.printStackTrace();
-		}
-		return true;
-	}
-	
+
 	public String crearMensaje(String[]lista) {
 		String out = "<code>";
 		for (int i = 0; i < lista.length; i++) {
@@ -73,6 +65,19 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 			out += "\n";
 		}
 		return out + "</code>";
+	}
+	
+	public Boolean enviarMensaje(long chat_id, String txt) {	
+		SendMessage enviarMensaje = new SendMessage();
+		enviarMensaje.enableHtml(true);
+		enviarMensaje.setChatId(chat_id).setText(txt);
+		try {
+			execute(enviarMensaje);
+			return true;
+		}catch (TelegramApiException telegramException) {
+			telegramException.printStackTrace();
+			return false;
+		}	
 	}
 	
 	@Override
