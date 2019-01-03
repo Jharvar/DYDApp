@@ -62,6 +62,7 @@ public class TelegramServer extends TelegramLongPollingBot {
 			e.printStackTrace();
 		}
 	}
-	
-	
 }
+	
+	
+
