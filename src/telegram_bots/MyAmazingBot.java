@@ -1,12 +1,21 @@
 package telegram_bots;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import clases.Categorias;
+import db.DB_Tienda;
 
 public class MyAmazingBot extends TelegramLongPollingBot {
-
+	private DB_Tienda tiendaDB;
+	
+	public MyAmazingBot() {
+		tiendaDB = new DB_Tienda();
+	}
+	
 	// Array harcodeados hasta hacer la conexion con jarvar
 	String[] armas = {"[001]-Espada larga", "[002]-Espada Corta", "[003]-Baston", "[004]-Arco Corto"};
 	String[] armaduras = {"[010]-Cuero", "[012]-Cuero tachonado", "[013]-Completa", "[014]-Placas"};
@@ -27,7 +36,7 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 			
 			// Opcion tienda 
 			if(mensajeDeTexto.substring(0,7).compareTo("/tienda")==0) {
-				tienda(mensajeDeTexto, chat_id,update);
+				tienda(mensajeDeTexto, chat_id);
 			}
 			
 			// Opcion ver
@@ -36,12 +45,19 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 		}
 	}
 
-	public void tienda(String mensaje, long chat_id, Update update) {
+	public void tienda(String mensaje, long chat_id) {
 		// TIENDA (categorias)
 		if (mensaje.length() == 7) {
-			String[] jarvarArray = categorias; // <<-- Array Jarvar
-			String salida = crearMensaje(jarvarArray);
-			enviarMensaje(chat_id, salida);
+			String msj = "";
+			try {
+				ArrayList<Categorias> categorias = tiendaDB.keepCategories();
+				for (Categorias c : categorias) {
+					msj += c.toString();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			enviarMensaje(chat_id, msj);
 		} 
 		
 		// TIENDA X
@@ -50,6 +66,8 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 			case "1":
 				System.out.println("Categoria 1");
 				String[] jarvarArrayArmas = armas; // <<-- Array Jarvar
+				
+				
 				String salidaArmas = crearMensaje(jarvarArrayArmas);
 				enviarMensaje(chat_id, salidaArmas);
 				break;
@@ -73,6 +91,10 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 			out += "\n";
 		}
 		return out + "</code>";
+	}
+	
+	public String addMensaje(String mensaje, String addTxt) {
+		return mensaje + addTxt;
 	}
 	
 	public Boolean enviarMensaje(long chat_id, String txt) {	

@@ -10,7 +10,7 @@ import clases.Armas;
 import clases.Categorias;
 import clases.ObjetosBasicos;
 
-public class DB_Categorias extends DB{
+public class DB_Tienda extends DB{
 	
 	
 	//Atributos de la clase
@@ -18,12 +18,13 @@ public class DB_Categorias extends DB{
 	private ArrayList<Armas> listaArmas;
 	private ArrayList<Armaduras> listaArmaduras;
 	private ArrayList<ObjetosBasicos> listaObjetosBasicos;
+	
 	//Atributos de operaciones
 	private Conexion conexion;
 	private Statement st;
 	private ResultSet rs;
 	
-	public DB_Categorias() {
+	public DB_Tienda() {
 		conexion = new Conexion();
 		listaCategorias = new ArrayList<>();
 		listaArmas = new ArrayList<>();
@@ -43,6 +44,13 @@ public class DB_Categorias extends DB{
 		conexion.closeConexion();
 		return listaCategorias;
 	}
+	
+	/**
+	 * 
+	 * @param id_objeto
+	 * @return ArrayList<?>
+	 * @throws SQLException
+	 */
 	
 	public ArrayList<?> keepObjects(int id_objeto) throws SQLException{
 		conexion.openConexion();
@@ -67,7 +75,6 @@ public class DB_Categorias extends DB{
 	
 	}
 	/**
-	 * 
 	 * @param rs
 	 * @return ArrayList<Armas>
 	 * @throws SQLException
@@ -83,7 +90,6 @@ public class DB_Categorias extends DB{
 		return listaArmas;
 	}
 	/**
-	 * 
 	 * @param rs
 	 * @return ArrayList<Armaduras>
 	 * @throws SQLException
