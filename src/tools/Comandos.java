@@ -4,7 +4,10 @@ package tools;
 
 public class Comandos {
 
+	public static final String LOGIN="/login";
+
 	public static final String JUGADOR="/jugador";
+
 	public static final String PERSONAJE="/personaje";
 	public static final String MENU ="/menu";
 	public static final String MERCADO_ARMAS="/armas";
