@@ -66,7 +66,12 @@ public class DB_Categorias extends DB{
 		
 	
 	}
-	
+	/**
+	 * 
+	 * @param rs
+	 * @return ArrayList<Armas>
+	 * @throws SQLException
+	 */
 	
 	public ArrayList<Armas> keepWeapons(ResultSet rs) throws SQLException {
 		while (rs.next()) {
@@ -77,6 +82,12 @@ public class DB_Categorias extends DB{
 		conexion.closeConexion();
 		return listaArmas;
 	}
+	/**
+	 * 
+	 * @param rs
+	 * @return ArrayList<Armaduras>
+	 * @throws SQLException
+	 */
 	public ArrayList<Armaduras> keepArmors(ResultSet rs) throws SQLException{
 		while(rs.next()) {
 			listaArmaduras.add(new Armaduras(rs.getInt("id_armadura"), rs.getString("nombre"), rs.getInt("precio"), rs.getInt("boni_CA"), rs.getInt("boni_defensa"), rs.getInt("penalizador"), rs.getString("fallo_conjuro"), rs.getString("velocidad"), rs.getString("peso")));
@@ -86,7 +97,12 @@ public class DB_Categorias extends DB{
 		conexion.closeConexion();
 		return listaArmaduras;
 	}
-	
+	/**
+	 * 
+	 * @param rs
+	 * @return ArrayList<ObjetosBasicos>
+	 * @throws SQLException
+	 */
 	public ArrayList<ObjetosBasicos> keepBasicObjects(ResultSet rs) throws SQLException{
 		while(rs.next()) {
 			listaObjetosBasicos.add(new ObjetosBasicos(rs.getInt("id_objetos"),rs.getString("nombre"), rs.getInt("precio"),rs.getInt("peso"), rs.getString("danio"),rs.getString("curacion"), rs.getString("descripcion")));
