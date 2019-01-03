@@ -1,15 +1,25 @@
 package telegram_bots;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import clases.Armas;
+import db.DB_Armas;
+
 public class MyAmazingBot extends TelegramLongPollingBot {
+
 	// Array harcodeados hasta hacer la conexion con jarvar
 	String[] armas = {"[001]-Espada larga", "[002]-Espada Corta", "[003]-Baston", "[004]-Arco Corto"};
 	String[] armaduras = {"[010]-Cuero", "[012]-Cuero tachonado", "[013]-Completa", "[014]-Placas"};
 	String[] categorias = {"armas", "armaduras", "magicos", "clase"};
+
+	private ArrayList<Armas> armas;
+
 	
 	@Override
 	public String getBotUsername() {
@@ -18,6 +28,7 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 
 	@Override
 	public void onUpdateReceived(Update update) {
+
 		if(update.hasMessage() && update.getMessage().hasText()) {
 			long chat_id = update.getMessage().getChatId();
 			System.out.println(chat_id);
@@ -62,7 +73,15 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 				break;
 			}
 		}
+
+		String comando = update.getMessage().getText();
+		SendMessage enviarMensaje = new SendMessage();
+		
+
 	}
+		
+		
+	
 
 	public String crearMensaje(String[]lista) {
 		String out = "<code>";
