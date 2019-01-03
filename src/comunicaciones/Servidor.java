@@ -27,7 +27,7 @@ public class Servidor extends Thread {
 			openStreams();
 	}
 	/**
-	 * Abrimos los flujos de datos
+
 	 */
 	public void openStreams() {
 		try {
@@ -42,9 +42,7 @@ public class Servidor extends Thread {
 			e.printStackTrace();
 		}
 	}
-	/**
-	 * Cerramos los flujos de datos
-	 */
+
 	public void closeStreams() {
 		try {
 			if(socketCliente.isClosed()) {
@@ -58,8 +56,5 @@ public class Servidor extends Thread {
 			e.printStackTrace();
 		}
 	}
-	
-	public void run() {
-		
-	}
+
 }
