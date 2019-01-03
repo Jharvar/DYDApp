@@ -22,9 +22,15 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 			long chat_id = update.getMessage().getChatId();
 			System.out.println(chat_id);
 			String mensajeDeTexto = update.getMessage().getText();
+			
+			// Opcion tienda 
 			if(mensajeDeTexto.substring(0,7).compareTo("/tienda")==0) {
 				tienda(mensajeDeTexto, chat_id);
 			}
+			
+			// Opcion ver
+			// Opcion comprar
+			// Opcion vender
 		}
 	}
 
