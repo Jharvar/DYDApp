@@ -10,7 +10,7 @@ import clases.Armas;
 import clases.Categorias;
 import clases.ObjetosBasicos;
 
-public class DB_Categorias extends DB{
+public class DB_Tienda extends DB{
 	
 	
 	//Atributos de la clase
@@ -23,7 +23,7 @@ public class DB_Categorias extends DB{
 	private Statement st;
 	private ResultSet rs;
 	
-	public DB_Categorias() {
+	public DB_Tienda() {
 		conexion = new Conexion();
 		listaCategorias = new ArrayList<>();
 		listaArmas = new ArrayList<>();
@@ -74,7 +74,6 @@ public class DB_Categorias extends DB{
 	
 	}
 	/**
-	 * 
 	 * @param rs
 	 * @return ArrayList<Armas>
 	 * @throws SQLException
@@ -90,7 +89,6 @@ public class DB_Categorias extends DB{
 		return listaArmas;
 	}
 	/**
-	 * 
 	 * @param rs
 	 * @return ArrayList<Armaduras>
 	 * @throws SQLException
