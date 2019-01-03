@@ -17,14 +17,23 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 			long chat_id = update.getMessage().getChatId();
 			System.out.println(chat_id);
 			String mensajeDeTexto = update.getMessage().getText();
-			if(mensajeDeTexto.substring(0,4).compareTo("/ver")==0) {
-				if(mensajeDeTexto.length()==4) {
+			if(mensajeDeTexto.substring(0,7).compareTo("/tienda")==0) {
+				if(mensajeDeTexto.length()==7) {
 					verCategorias(chat_id);
 				}
-				
-				if(mensajeDeTexto.substring(0,10).compareTo("/ver armas")==0) {
-					verArmas(chat_id);
-				}
+				else if (mensajeDeTexto.length()==9) {
+					switch (mensajeDeTexto.substring(8,9)) {
+					case "1":
+						System.out.println("Categoria 1");
+						break;
+					case "2":
+						System.out.println("Categoria 2");
+						break;
+					default:
+						System.out.println("Fail");
+						break;
+					}
+				}	
 			}
 		}
 	}
