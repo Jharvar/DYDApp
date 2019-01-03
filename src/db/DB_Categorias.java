@@ -44,6 +44,13 @@ public class DB_Categorias extends DB{
 		return listaCategorias;
 	}
 	
+	/**
+	 * 
+	 * @param id_objeto
+	 * @return ArrayList <?>
+	 * @throws SQLException
+	 */
+	
 	public ArrayList<?> keepObjects(int id_objeto) throws SQLException{
 		conexion.openConexion();
 		st = conexion.openConexion().createStatement();
