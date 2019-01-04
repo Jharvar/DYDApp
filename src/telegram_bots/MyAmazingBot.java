@@ -11,8 +11,7 @@ import db.DB_Tienda;
 
 public class MyAmazingBot extends TelegramLongPollingBot {
 	private DB_Tienda tiendaDB;
-	
-	String test;
+
 	public MyAmazingBot() {
 		tiendaDB = new DB_Tienda();
 	}
