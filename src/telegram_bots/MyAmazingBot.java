@@ -31,12 +31,16 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 
 		if(update.hasMessage() && update.getMessage().hasText()) {
 			long chat_id = update.getMessage().getChatId();
-			System.out.println(chat_id);
+			
 			String mensajeDeTexto = update.getMessage().getText();
+			System.out.println(chat_id + " envia: " + mensajeDeTexto);
 			
 			// Opcion tienda 
-			if(mensajeDeTexto.substring(0,7).compareTo("/tienda")==0) {
-				tienda(mensajeDeTexto, chat_id);
+			try {
+				if(mensajeDeTexto.substring(0,7).compareTo("/tienda")==0) {
+					tienda(mensajeDeTexto, chat_id);
+				}
+			} catch (StringIndexOutOfBoundsException e) {
 			}
 			
 			// Opcion ver

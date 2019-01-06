@@ -18,7 +18,11 @@ public class Principal {
 		
 		//Registrar nuestro bot
 		try {
-			bostsApi.registerBot(new TelegramServer());
+			// Jarvar
+			//bostsApi.registerBot(new TelegramServer());
+			
+			// Zaiuss
+			bostsApi.registerBot(new MyAmazingBot());
 			
 		}catch (TelegramApiException telAe) {
 			telAe.getCause();
