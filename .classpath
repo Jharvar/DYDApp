@@ -14,5 +14,10 @@
 	<classpathentry kind="lib" path="librerias/telegrambots-spring-boot-starter-4.1.jar"/>
 	<classpathentry kind="lib" path="librerias/telegrambotsextensions-4.1-jar-with-dependencies.jar"/>
 	<classpathentry kind="lib" path="librerias/telegrambotsextensions-4.1.jar"/>
+	<classpathentry kind="lib" path="librerias/lib/AbsoluteLayout.jar"/>
+	<classpathentry kind="lib" path="librerias/lib/beansbinding-1.2.1.jar"/>
+	<classpathentry kind="lib" path="librerias/lib/swing-layout-1.0.4.jar"/>
+	<classpathentry kind="lib" path="librerias/lib/TimingFramework.jar"/>
+	<classpathentry kind="lib" path="librerias/edisoncorSX.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

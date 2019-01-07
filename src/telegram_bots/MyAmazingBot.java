@@ -1,6 +1,6 @@
 package telegram_bots;
 
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -9,13 +9,11 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import clases.Armas;
-import db.DB_Armas;
 import db.DB_Tienda;
 import tools.Identificadores;
 
 public class MyAmazingBot extends TelegramLongPollingBot {
 
-	
 	private DB_Tienda tienda;
 	private ArrayList<Armas> armas2;
 	// Array harcodeados hasta hacer la conexion con jarvar
