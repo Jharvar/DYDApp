@@ -2,11 +2,7 @@ package telegram_bots;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
-
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
-
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -92,6 +88,8 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 	 */
 	public String CMDtienda(ArrayList<String> args) {
 		String msj = "";
+		
+		// /tienda (Sin argumento) muestra las categorias
 		if (args.size() == 1) {
 			try {
 				ArrayList<Categorias> categorias = tiendaDB.keepCategories();
@@ -102,6 +100,8 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 				e.printStackTrace();
 			}
 		}
+		
+		// /tienda arg
 		return msj;
 	}
 
