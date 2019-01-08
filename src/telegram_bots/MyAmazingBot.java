@@ -2,6 +2,11 @@ package telegram_bots;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
+import java.util.StringTokenizer;
+
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -16,11 +21,6 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 		tiendaDB = new DB_Tienda();
 	}
 	
-	// Array harcodeados hasta hacer la conexion con jarvar
-	String[] armas = {"[001]-Espada larga", "[002]-Espada Corta", "[003]-Baston", "[004]-Arco Corto"};
-	String[] armaduras = {"[010]-Cuero", "[012]-Cuero tachonado", "[013]-Completa", "[014]-Placas"};
-	String[] categorias = {"armas", "armaduras", "magicos", "clase"};
-	
 	@Override
 	public String getBotUsername() {
 		return "ZaiussBot";
@@ -31,82 +31,86 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 
 		if(update.hasMessage() && update.getMessage().hasText()) {
 			long chat_id = update.getMessage().getChatId();
-			
 			String mensajeDeTexto = update.getMessage().getText();
 			System.out.println(chat_id + " envia: " + mensajeDeTexto);
 			
-			// Opcion tienda 
-			try {
-				if(mensajeDeTexto.substring(0,7).compareTo("/tienda")==0) {
-					tienda(mensajeDeTexto, chat_id);
-				}
-			} catch (StringIndexOutOfBoundsException e) {
+			// Convierte el input recibido en ArrayList<String> (se valida mejor).
+			ArrayList<String> p = getArgs(mensajeDeTexto); 
+
+			// TIENDA
+			if (isTiendaCommand(p)){
+				enviarMensaje(chat_id, CMDtienda(p));
 			}
 			
-			// Opcion ver
-			// Opcion comprar
-			// Opcion vender
+			// COMPRAR
+			if (isComprarCommand(p)) {
+				// TODO
+			}
+			
+			// VENDER
+			if (isComprarCommand(p)) {
+				// TODO
+			}
 		}
 	}
+	
+	private boolean isComprarCommand(ArrayList<String> p) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
-	public void tienda(String mensaje, long chat_id) {
-		// TIENDA (categorias)
-		if (mensaje.length() == 7) {
-			String msj = "";
+	/*
+	 *  Devuelve el input en array
+	 */
+	public ArrayList<String> getArgs(String msj) {
+		StringTokenizer st = new StringTokenizer(msj);
+		ArrayList<String> p = new ArrayList<>();
+		while (st.hasMoreElements()) {
+			p.add(st.nextElement().toString());
+		}
+		return p;
+	}
+	
+	/*
+	 * Valida /tienda
+	 */
+	public Boolean isTiendaCommand(ArrayList<String> params) {
+		if (params.size() > 0) {
+			if(params.get(0).equals("/tienda")) {
+				System.out.println("Comando tienda identificado");
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/*
+	 * /tienda + args
+	 */
+	public String CMDtienda(ArrayList<String> args) {
+		String msj = "";
+		if (args.size() == 1) {
 			try {
 				ArrayList<Categorias> categorias = tiendaDB.keepCategories();
 				for (Categorias c : categorias) {
-					msj += c.toString();
+					msj += c.toStringTiendaHtml();
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			enviarMensaje(chat_id, msj);
-		} 
-		
-		// TIENDA X
-		else if (mensaje.length() == 9) {
-			switch (mensaje.substring(8,9)) {
-			case "1":
-				System.out.println("Categoria 1");
-				String[] jarvarArrayArmas = armas; // <<-- Array Jarvar
-				
-				
-				String salidaArmas = crearMensaje(jarvarArrayArmas);
-				enviarMensaje(chat_id, salidaArmas);
-				break;
-			case "2":
-				System.out.println("Categoria 2");
-				String[] jarvarArrayArmaduras = armaduras; // <<-- Array Jarvar
-				String salidaArmaduras = crearMensaje(jarvarArrayArmaduras);
-				enviarMensaje(chat_id, salidaArmaduras);
-				break;
-			default:
-				System.out.println("Fail");
-				break;
-			}
 		}
+		return msj;
 	}
-		
-	public String crearMensaje(String[]lista) {
-		String out = "<code>";
-		for (int i = 0; i < lista.length; i++) {
-			out += lista[i];
-			out += "\n";
-		}
-		return out + "</code>";
-	}
-	
-	public String addMensaje(String mensaje, String addTxt) {
-		return mensaje + addTxt;
-	}
-	
+
+	/*
+	 * Envia un String a un id
+	 */
 	public Boolean enviarMensaje(long chat_id, String txt) {	
-		SendMessage enviarMensaje = new SendMessage();
-		enviarMensaje.enableHtml(true);
-		enviarMensaje.setChatId(chat_id).setText(txt);
+		SendMessage sm = new SendMessage();
+		sm.enableHtml(true);
+		sm.setChatId(chat_id).setText(txt);
 		try {
-			execute(enviarMensaje);
+			execute(sm);
 			return true;
 		}catch (TelegramApiException telegramException) {
 			telegramException.printStackTrace();
