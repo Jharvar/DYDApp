@@ -12,7 +12,10 @@ import clases.ObjetosBasicos;
 
 public class DB_Tienda extends DB{
 	
-	
+	//Atributos de la clase para obtener objetos únicos
+	private Armas weapon;
+	private Armaduras armor;
+	private ObjetosBasicos basicObject;
 	//Atributos de la clase
 	private ArrayList<Categorias> listaCategorias;
 	private ArrayList<Armas> listaArmas;
@@ -117,6 +120,53 @@ public class DB_Tienda extends DB{
 		st.close();
 		conexion.closeConexion();
 		return listaObjetosBasicos;
+	}
+	
+	public Object getObjectToCategoria(int categoria, int id_objeto) throws SQLException{
+		switch (categoria) {
+		case 1:return getWeapon(id_objeto);
+		case 2:return getArmor(id_objeto);
+		case 3:return getBasicObject(id_objeto);
+		}
+		
+		return null;
+	}
+	
+	public Armas getWeapon(int id_objeto) throws SQLException{
+		conexion.openConexion();
+		st = conexion.openConexion().createStatement();
+		rs = st.executeQuery("SELECT * FROM armas WHERE id_armas='"+id_objeto+"'");
+		if(rs.first()) {
+			weapon = new Armas(rs.getInt("id_armas"), rs.getString("nombre"), rs.getInt("precio"), rs.getString("danio"), rs.getString("critico"), rs.getString("distancia"), rs.getInt("peso"), rs.getString("tipo_danio"), rs.getString("artefacto"));
+		}else {
+			System.out.println("Registro no encontrado");
+		}
+		rs.close();
+		st.close();
+		conexion.closeConexion();
+		return weapon;
+	}
+	public Armaduras getArmor(int id_objeto) throws SQLException{
+		conexion.openConexion();
+		st = conexion.openConexion().createStatement();
+		rs = st.executeQuery("SELECT * FROM armaduras where id_armaduras='"+id_objeto+"'");
+		if(rs.first()) {
+			armor = new Armaduras(rs.getInt("id_armaduras"), rs.getString("nombre"), rs.getInt("precio"), rs.getInt("boni_CA"), rs.getInt("boni_defensa"), rs.getInt("penalizador"), rs.getString("fallo_conjuro"), rs.getString("velocidad"), rs.getString("peso"));
+		}
+		rs.close();
+		st.close();
+		conexion.closeConexion();
+		return armor;
+	}
+	
+	public ObjetosBasicos getBasicObject(int id_objeto) throws SQLException{
+		conexion.openConexion();
+		st = conexion.openConexion().createStatement();
+		rs = st.executeQuery("SELECT * FROM objeto_basico WHERE id_objetos='"+id_objeto+"'");
+		if(rs.first()) {
+			basicObject = new ObjetosBasicos(rs.getInt("id_objetos"), rs.getString("nombre"), rs.getInt("precio"), rs.getInt("peso"), rs.getString("danio"), rs.getString("curacion"), rs.getString("descripcion"));
+		}
+		return basicObject;
 	}
 }
 
