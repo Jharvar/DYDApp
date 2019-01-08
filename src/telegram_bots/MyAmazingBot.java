@@ -20,7 +20,7 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 	public MyAmazingBot() {
 		tiendaDB = new DB_Tienda();
 	}
-	
+
 	@Override
 	public String getBotUsername() {
 		return "ZaiussBot";
@@ -29,38 +29,38 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 	@Override
 	public void onUpdateReceived(Update update) {
 
-		if(update.hasMessage() && update.getMessage().hasText()) {
+		if (update.hasMessage() && update.getMessage().hasText()) {
 			long chat_id = update.getMessage().getChatId();
 			String mensajeDeTexto = update.getMessage().getText();
 			System.out.println(chat_id + " envia: " + mensajeDeTexto);
-			
-			// Convierte el input recibido en ArrayList<String> (se valida mejor).
-			ArrayList<String> p = getArgs(mensajeDeTexto); 
 
-			// TIENDA
-			if (isTiendaCommand(p)){
-				enviarMensaje(chat_id, CMDtienda(p));
-			}
-			
-			// COMPRAR
-			if (isComprarCommand(p)) {
-				// TODO
-			}
-			
-			// VENDER
-			if (isComprarCommand(p)) {
-				// TODO
+			// Convierte el input recibido en ArrayList<String> (se valida mejor).
+			ArrayList<String> p = getArgs(mensajeDeTexto);
+			// getCommand ya valida, sino devuelve null.
+			String cmd = getCommand(p);
+			if (cmd != null) {
+				switch (cmd) {
+				case "/tienda":
+					enviarMensaje(chat_id, CMDtienda(p));
+					break;
+
+				case "/comprar":
+					break;
+
+				case "/vender":
+					break;
+				default:
+					enviarError(chat_id);
+					break;
+				}
+			} else {
+				enviarError(chat_id);
 			}
 		}
 	}
-	
-	private boolean isComprarCommand(ArrayList<String> p) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	/*
-	 *  Devuelve el input en array
+	 * Devuelve el input en array
 	 */
 	public ArrayList<String> getArgs(String msj) {
 		StringTokenizer st = new StringTokenizer(msj);
@@ -72,20 +72,20 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 	}
 	
 	/*
-	 * Valida /tienda
+	 * Valida el comando
 	 */
-	public Boolean isTiendaCommand(ArrayList<String> params) {
-		if (params.size() > 0) {
-			if(params.get(0).equals("/tienda")) {
-				System.out.println("Comando tienda identificado");
-				return true;
+	public String getCommand(ArrayList<String> p) {
+		String[] avaliableCommandas = { "/tienda", "/comprar", "/vender" };
+		for (int i = 0; i < avaliableCommandas.length; i++) {
+			if (p.get(0).equals(avaliableCommandas[i])) {
+				return p.get(0);
 			}
 		}
-		return false;
+		return null;
 	}
-	
+
 	/*
-	 * /tienda + args
+	 * Command /tienda
 	 */
 	public String CMDtienda(ArrayList<String> args) {
 		String msj = "";
@@ -105,19 +105,36 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 	/*
 	 * Envia un String a un id
 	 */
-	public Boolean enviarMensaje(long chat_id, String txt) {	
+	public Boolean enviarMensaje(long chat_id, String txt) {
 		SendMessage sm = new SendMessage();
 		sm.enableHtml(true);
 		sm.setChatId(chat_id).setText(txt);
 		try {
 			execute(sm);
 			return true;
-		}catch (TelegramApiException telegramException) {
+		} catch (TelegramApiException telegramException) {
 			telegramException.printStackTrace();
 			return false;
-		}	
+		}
 	}
-	
+
+	/*
+	 * Envia error
+	 */
+	public Boolean enviarError(long chat_id) {
+		SendMessage sm = new SendMessage();
+		sm.enableHtml(true);
+		String error = "<code> Error!! </code>";
+		sm.setChatId(chat_id).setText(error);
+		try {
+			execute(sm);
+			return true;
+		} catch (TelegramApiException telegramException) {
+			telegramException.printStackTrace();
+			return false;
+		}
+	}
+
 	@Override
 	public String getBotToken() {
 		return "654542961:AAGZDxcg6owBy-P-3oAH8pxQr6ppDfcXe0U";
