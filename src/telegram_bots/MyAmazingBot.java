@@ -26,22 +26,19 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 		return "ZaiussBot";
 	}
 
-	
 	@Override
 	public void onUpdateReceived(Update update) {
-		//if (update.hasMessage() && update.getMessage().hasText()) {
-		if (update.hasMessage()) {
+		if (update.hasMessage() && update.getMessage().hasText()) {
 			long chat_id = update.getMessage().getChatId();
 			String mensajeDeTexto = update.getMessage().getText();
-			//String t = update.get
-			//System.out.println(chat_id + " envia: " + mensajeDeTexto);
+			System.out.println(chat_id + " envia: " + mensajeDeTexto);
 
 			// Convierte el input recibido en ArrayList<String> (se valida mejor).
-			ArrayList<String> pArgs = new ArrayList<>();
-			pArgs.clear();
-			pArgs =  getArgs(mensajeDeTexto);
+			ArrayList<String> pArgs = getArgs(mensajeDeTexto);
+
 			// getCommand ya valida, sino devuelve null.
 			String cmd = getCommand(pArgs);
+
 			if (cmd != null) {
 				switch (cmd) {
 				case "/tienda":
@@ -53,6 +50,7 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 
 				case "/vender":
 					break;
+
 				default:
 					enviarError(chat_id);
 					break;
@@ -60,7 +58,7 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 			} else {
 				enviarError(chat_id);
 			}
-}
+		}
 	}
 
 	/*
@@ -105,7 +103,7 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 			}
 		}
 		return msj;
-}
+	}
 
 	/*
 	 * Envia un String a un id
