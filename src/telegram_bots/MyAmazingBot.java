@@ -26,22 +26,26 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 		return "ZaiussBot";
 	}
 
+	
 	@Override
 	public void onUpdateReceived(Update update) {
-
-		if (update.hasMessage() && update.getMessage().hasText()) {
+		//if (update.hasMessage() && update.getMessage().hasText()) {
+		if (update.hasMessage()) {
 			long chat_id = update.getMessage().getChatId();
 			String mensajeDeTexto = update.getMessage().getText();
-			System.out.println(chat_id + " envia: " + mensajeDeTexto);
+			//String t = update.get
+			//System.out.println(chat_id + " envia: " + mensajeDeTexto);
 
 			// Convierte el input recibido en ArrayList<String> (se valida mejor).
-			ArrayList<String> p = getArgs(mensajeDeTexto);
+			ArrayList<String> pArgs = new ArrayList<>();
+			pArgs.clear();
+			pArgs =  getArgs(mensajeDeTexto);
 			// getCommand ya valida, sino devuelve null.
-			String cmd = getCommand(p);
+			String cmd = getCommand(pArgs);
 			if (cmd != null) {
 				switch (cmd) {
 				case "/tienda":
-					enviarMensaje(chat_id, CMDtienda(p));
+					enviarMensaje(chat_id, CMDtienda(pArgs));
 					break;
 
 				case "/comprar":
@@ -56,7 +60,7 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 			} else {
 				enviarError(chat_id);
 			}
-		}
+}
 	}
 
 	/*
@@ -65,14 +69,15 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 	public ArrayList<String> getArgs(String msj) {
 		StringTokenizer st = new StringTokenizer(msj);
 		ArrayList<String> p = new ArrayList<>();
+		p.clear();
 		while (st.hasMoreElements()) {
 			p.add(st.nextElement().toString());
 		}
 		return p;
 	}
-	
+
 	/*
-	 * Valida el comando
+	 * Valida el comando y devuelve array valido.
 	 */
 	public String getCommand(ArrayList<String> p) {
 		String[] avaliableCommandas = { "/tienda", "/comprar", "/vender" };
@@ -100,7 +105,7 @@ public class MyAmazingBot extends TelegramLongPollingBot {
 			}
 		}
 		return msj;
-	}
+}
 
 	/*
 	 * Envia un String a un id

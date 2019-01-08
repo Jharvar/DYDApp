@@ -12,7 +12,7 @@ import clases.ObjetosBasicos;
 
 public class DB_Tienda extends DB{
 	
-	//Atributos de la clase para obtener objetos únicos
+	//Atributos de la clase para obtener objetos ï¿½nicos
 	private Armas weapon;
 	private Armaduras armor;
 	private ObjetosBasicos basicObject;
