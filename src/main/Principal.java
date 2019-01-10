@@ -6,7 +6,7 @@ import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-
+import telegram_bots.MyAmazingBot;
 import telegram_bots.TelegramServer;
 
 public class Principal {
@@ -21,7 +21,11 @@ public class Principal {
 		
 		//Registrar nuestro bot
 		try {
-			bostsApi.registerBot(new TelegramServer());
+			// Jarvar
+			//bostsApi.registerBot(new TelegramServer());
+			
+			// Zaiuss
+			bostsApi.registerBot(new MyAmazingBot());
 			
 		}catch (TelegramApiException telAe) {
 			telAe.getCause();
