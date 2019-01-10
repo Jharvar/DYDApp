@@ -76,6 +76,7 @@ public class ThalantyrHelper {
 		switch (catSelected) {
 		case 1:
 			//tiendaDB.keepObjects(catSelected);
+			
 			return "Categoria 1";
 		case 2:
 			return "Categoria 2";
@@ -89,6 +90,12 @@ public class ThalantyrHelper {
 
 		
 
+	}
+	
+	public String getArmaString() {
+		//tiendaDB.keepObjects(1);
+		
+		return null;
 	}
 	/*
 	 * try { // Se pilla el int de categoria int c =
