@@ -4,7 +4,7 @@ import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import telegram_bots.MyAmazingBot;
+import telegram_bots.ThalantyrBot;
 import telegram_bots.TelegramServer;
 
 public class Principal {
@@ -22,7 +22,7 @@ public class Principal {
 			//bostsApi.registerBot(new TelegramServer());
 			
 			// Zaiuss
-			bostsApi.registerBot(new MyAmazingBot());
+			bostsApi.registerBot(new ThalantyrBot());
 			
 		}catch (TelegramApiException telAe) {
 			telAe.getCause();
