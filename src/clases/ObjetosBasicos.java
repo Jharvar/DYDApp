@@ -87,5 +87,7 @@ public class ObjetosBasicos {
 				+ peso + ", danio=" + danio + ", curacion=" + curacion + ", descripcion=" + descripcion + "]";
 	}
 	
-	
+	public String toStringTiendaListHtml(String fix) { 
+		return fix + id_objetos + "-" + nombre + " - " + precio + "g\n"; 
+	}
 }

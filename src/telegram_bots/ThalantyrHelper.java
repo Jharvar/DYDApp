@@ -1,12 +1,11 @@
 package telegram_bots;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
-
+import clases.Armaduras;
 import clases.Armas;
 import clases.Categorias;
+import clases.ObjetosBasicos;
 import db.DB_Tienda;
-import javassist.expr.NewArray;
 
 public class ThalantyrHelper {
 
@@ -28,7 +27,6 @@ public class ThalantyrHelper {
 			// Argumento de un digito *id_categoria
 			if (userInput.get(1).length() == 1) {
 				return getCategory(userInput.get(1));
-				// getCategory(chat_id, userInput.get(1));
 			}
 
 			// Argumento de 4 digitos *id_categoria(1) + *id_objeto(3)
@@ -56,7 +54,6 @@ public class ThalantyrHelper {
 		for (Categorias c : categorias) {
 			msj += c.toStringTiendaHtml();
 		}
-		// enviarMensaje(chat_id, msj);
 		return msj;
 	}
 
@@ -64,60 +61,75 @@ public class ThalantyrHelper {
 	 * Muestra lista de objetos de una categoria.
 	 */
 	public String getCategory(String userString) {
-		// Quizas se pueda mandar cualquier entero y si la bd nos da null
-		// prescindir es estas comprobaciones...
-		// int[] catAvaliable = { 1, 2, 3, 4 };
 		Integer catSelected = getCodeCategoria(userString);
 		if (catSelected == 0)
 			return null;
+		
 		switch (catSelected) {
 		case 1:
-			//tiendaDB.keepObjects(catSelected);
-			
 			return getArmaString();
 		case 2:
-			return "Categoria 2";
+			return getArmadurasString();
 		case 3:
-			return "Categoria 3";
-
+			return getBasicObjectString();
 		default:
-			return "Categoria erronea";
+			return "Proximamente ,)";
 		}
-		// ArrayList<Integer> categoriesDB = getAvaliableCategories();
-
-		
-
 	}
-	
+
 	public String getArmaString() {
-		
-		try {
-			String out = "";
-			ArrayList<?> a = tiendaDB.keepObjects(1);
-			Armas arm = new Armas();
-			for (Object object : a) {
-				arm = (Armas)object;
-				out = arm.toStringTiendaListHtml() + "\n";
-				//out += (Armas)object.toString();
+		String out = "\t\t[$] ARMAS [$]\t\t\n";
+		ArrayList<?> a = tiendaDB.keepObjects(1);
+		Armas arm = new Armas();
+		for (Object object : a) {
+			arm = (Armas) object;
+			if (arm.getId_armas() < 10) {
+				out += arm.toStringTiendaListHtml("100");
+			} else if (arm.getId_armas() < 100) {
+
+				out += arm.toStringTiendaListHtml("10");
+			} else {
+				out += arm.toStringTiendaListHtml("1");
 			}
-			return out;
-			
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-		
-		return null;
+		return out;
 	}
-	/*
-	 * try { // Se pilla el int de categoria int c =
-	 * Integer.parseInt(userString.charAt(0) + "");
-	 * 
-	 * // Se comprueba si esta dentro de las categorias disponibles for (int i = 0;
-	 * i < catAvaliable.length; i++) { if (c == (i + 1)) { return ""; } } return "";
-	 * } catch (NumberFormatException e) { return ""; } } }
-	 */
+
+	public String getArmadurasString() {
+		String out = "\t\t[$] ARMADURAS [$]\t\t\n";
+		ArrayList<?> a = tiendaDB.keepObjects(2);
+		Armaduras arm = new Armaduras();
+		for (Object object : a) {
+			arm = (Armaduras) object;
+			if (arm.getId_armaduras() < 10) {
+				out += arm.toStringTiendaListHtml("200");
+			} else if (arm.getId_armaduras() < 100) {
+
+				out += arm.toStringTiendaListHtml("20");
+			} else {
+				out += arm.toStringTiendaListHtml("2");
+			}
+		}
+		return out;
+	}
+
+	public String getBasicObjectString() {
+		String out = "\t\t[$] OBJETOS BASICOS [$]\t\t\n";
+		ArrayList<?> a = tiendaDB.keepObjects(3);
+		ObjetosBasicos ob = new ObjetosBasicos();
+		for (Object object : a) {
+			ob = (ObjetosBasicos) object;
+			if (ob.getId_objetos() < 10) {
+				out += ob.toStringTiendaListHtml("300");
+			} else if (ob.getId_objetos() < 100) {
+
+				out += ob.toStringTiendaListHtml("30");
+			} else {
+				out += ob.toStringTiendaListHtml("3");
+			}
+		}
+		return out;
+	}
 
 	public ArrayList<Integer> getAvaliableCategories() {
 		ArrayList<Integer> outList = new ArrayList<>();
@@ -127,9 +139,7 @@ public class ThalantyrHelper {
 			outList.add(catObj.getId_categoria());
 			System.out.println(catObj.getNombre_categoria() + " added to avaliables");
 		}
-
 		return null;
-
 	}
 
 	/*

@@ -11,6 +11,10 @@ public class Armaduras {
 	private String fallo_conjuro;
 	private String velocidad;
 	private String peso;
+	
+	public Armaduras() {
+		
+	}
 	public Armaduras(int id_armaduras, String nombre, int precio, int boni_CA, int boni_defensa, int penalizador,
 			String fallo_conjuro, String velocidad, String peso) {
 		
@@ -78,6 +82,11 @@ public class Armaduras {
 	public void setPeso(String peso) {
 		this.peso = peso;
 	}
+	
+	public String toStringTiendaListHtml(String fix) { 
+		return fix + id_armaduras + "-" + nombre + " - " + precio + "g\n"; 
+	}
+	
 	@Override
 	public String toString() {
 		return "Armaduras [id_armaduras=" + id_armaduras + ", nombre=" + nombre + ", precio=" + precio + ", boni_CA="

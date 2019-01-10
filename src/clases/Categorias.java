@@ -46,6 +46,6 @@ public class Categorias {
 		return id_categoria + " - " + nombre_categoria; 
 	}
 	public String toStringTiendaHtml() { 
-		return "<code>" + id_categoria + " - " + nombre_categoria + "</code>\n"; 
+		return id_categoria + " - " + nombre_categoria + "\n"; 
 	}
 }

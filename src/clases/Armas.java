@@ -101,8 +101,8 @@ public class Armas {
 		this.artefacto = artefacto;
 	}
 
-	public String toStringTiendaListHtml() { 
-		return "<code>" + id_armas + " - " + nombre + " -" + precio + "g</code>\n"; 
+	public String toStringTiendaListHtml(String fix) { 
+		return fix + id_armas + "-" + nombre + " - " + precio + "g\n"; 
 	}
 	
 	@Override

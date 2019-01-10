@@ -97,7 +97,7 @@ public class ThalantyrBot extends TelegramLongPollingBot {
 	public Boolean enviarMensaje(long chat_id, String txt) {
 		SendMessage sm = new SendMessage();
 		sm.enableHtml(true);
-		sm.setChatId(chat_id).setText(txt);
+		sm.setChatId(chat_id).setText("<code>" + txt + "</code>");
 		try {
 			execute(sm);
 			return true;

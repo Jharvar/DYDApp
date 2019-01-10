@@ -32,9 +32,6 @@ public class DB_Tienda extends DB {
 
 	}
 
-	
-
-
 	public ArrayList<Categorias> keepCategories()  {
 		try {
 		conexion.openConexion();
@@ -61,25 +58,29 @@ public class DB_Tienda extends DB {
 	 * @throws SQLException
 	 */
 
-	public ArrayList<?> keepObjects(int id_objeto) throws SQLException {
-		conexion.openConexion();
-		st = conexion.openConexion().createStatement();
-		switch (id_objeto) {
-		case 1:
-			rs = st.executeQuery("SELECT * FROM armas");
-			return keepWeapons(rs);
-		case 2:
-			rs = st.executeQuery("SELECT * FROM armaduras");
-			return keepArmors(rs);
-		case 3:
-			rs = st.executeQuery("SELECT * FROM objetos_basicos");
-			return keepBasicObjects(rs);
-		case 4:
+	public ArrayList<?> keepObjects(int id_objeto){
+		try {
+			conexion.openConexion();
+			st = conexion.openConexion().createStatement();
+			switch (id_objeto) {
+			case 1:
+				rs = st.executeQuery("SELECT * FROM armas");
+				return keepWeapons(rs);
+			case 2:
+				rs = st.executeQuery("SELECT * FROM armaduras");
+				return keepArmors(rs);
+			case 3:
+				rs = st.executeQuery("SELECT * FROM objetos_basicos");
+				return keepBasicObjects(rs);
+			case 4:
+				return null;
+
+			}
 			return null;
-
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
 		}
-		return null;
-
 	}
 
 	/**
@@ -109,7 +110,7 @@ public class DB_Tienda extends DB {
 	public ArrayList<Armaduras> keepArmors(ResultSet rs) throws SQLException {
 		listaArmaduras = new ArrayList<>();
 		while (rs.next()) {
-			listaArmaduras.add(new Armaduras(rs.getInt("id_armadura"), rs.getString("nombre"), rs.getInt("precio"),
+			listaArmaduras.add(new Armaduras(rs.getInt("id_armaduras"), rs.getString("nombre"), rs.getInt("precio"),
 					rs.getInt("boni_CA"), rs.getInt("boni_defensa"), rs.getInt("penalizador"),
 					rs.getString("fallo_conjuro"), rs.getString("velocidad"), rs.getString("peso")));
 		}
@@ -137,11 +138,6 @@ public class DB_Tienda extends DB {
 		conexion.closeConexion();
 		return listaObjetosBasicos;
 	}
-
-	
-
-
-
 
 	/**
 	 * 
