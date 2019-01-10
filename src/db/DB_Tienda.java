@@ -32,7 +32,11 @@ public class DB_Tienda extends DB {
 
 	}
 
-	public ArrayList<Categorias> keepCategories() throws SQLException {
+	
+
+
+	public ArrayList<Categorias> keepCategories()  {
+		try {
 		conexion.openConexion();
 		st = conexion.openConexion().createStatement();
 		rs = st.executeQuery("SELECT * FROM categorias");
@@ -44,6 +48,9 @@ public class DB_Tienda extends DB {
 		rs.close();
 		st.close();
 		conexion.closeConexion();
+		}catch (SQLException e) {
+			return null;
+		}
 		return listaCategorias;
 	}
 
@@ -130,6 +137,11 @@ public class DB_Tienda extends DB {
 		conexion.closeConexion();
 		return listaObjetosBasicos;
 	}
+
+	
+
+
+
 
 	/**
 	 * 

@@ -2,6 +2,8 @@ package telegram_bots;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import clases.Armas;
 import clases.Categorias;
 import db.DB_Tienda;
 import javassist.expr.NewArray;
@@ -25,7 +27,7 @@ public class ThalantyrHelper {
 
 			// Argumento de un digito *id_categoria
 			if (userInput.get(1).length() == 1) {
-				return "";
+				return getCategory(userInput.get(1));
 				// getCategory(chat_id, userInput.get(1));
 			}
 
@@ -50,23 +52,18 @@ public class ThalantyrHelper {
 	 */
 	public String getCategories(long chat_id, ArrayList<String> userInput) {
 		String msj = "";
-		try {
-			ArrayList<Categorias> categorias = tiendaDB.keepCategories();
-			for (Categorias c : categorias) {
-				msj += c.toStringTiendaHtml();
-			}
-			// enviarMensaje(chat_id, msj);
-			return msj;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+		ArrayList<Categorias> categorias = tiendaDB.keepCategories();
+		for (Categorias c : categorias) {
+			msj += c.toStringTiendaHtml();
 		}
+		// enviarMensaje(chat_id, msj);
+		return msj;
 	}
 
 	/*
 	 * Muestra lista de objetos de una categoria.
 	 */
-	public String getCategory(long chat_id, String userString) {
+	public String getCategory(String userString) {
 		// Quizas se pueda mandar cualquier entero y si la bd nos da null
 		// prescindir es estas comprobaciones...
 		// int[] catAvaliable = { 1, 2, 3, 4 };
@@ -77,7 +74,7 @@ public class ThalantyrHelper {
 		case 1:
 			//tiendaDB.keepObjects(catSelected);
 			
-			return "Categoria 1";
+			return getArmaString();
 		case 2:
 			return "Categoria 2";
 		case 3:
@@ -93,7 +90,23 @@ public class ThalantyrHelper {
 	}
 	
 	public String getArmaString() {
-		//tiendaDB.keepObjects(1);
+		
+		try {
+			String out = "";
+			ArrayList<?> a = tiendaDB.keepObjects(1);
+			Armas arm = new Armas();
+			for (Object object : a) {
+				arm = (Armas)object;
+				out = arm.toStringTiendaListHtml() + "\n";
+				//out += (Armas)object.toString();
+			}
+			return out;
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return null;
 	}
@@ -107,16 +120,12 @@ public class ThalantyrHelper {
 	 */
 
 	public ArrayList<Integer> getAvaliableCategories() {
-		try {
-			ArrayList<Integer> outList = new ArrayList<>();
+		ArrayList<Integer> outList = new ArrayList<>();
 
-			ArrayList<Categorias> c = tiendaDB.keepCategories();
-			for (Categorias catObj : c) {
-				outList.add(catObj.getId_categoria());
-				System.out.println(catObj.getNombre_categoria() + " added to avaliables");
-			}
-		} catch (SQLException e) {
-
+		ArrayList<Categorias> c = tiendaDB.keepCategories();
+		for (Categorias catObj : c) {
+			outList.add(catObj.getId_categoria());
+			System.out.println(catObj.getNombre_categoria() + " added to avaliables");
 		}
 
 		return null;
