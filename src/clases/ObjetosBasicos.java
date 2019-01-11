@@ -11,7 +11,6 @@ public class ObjetosBasicos {
 	private String descripcion;
 	
 	public ObjetosBasicos() {
-		//constructor por defecto
 	}
 
 	public ObjetosBasicos(int id_objetos, String nombre, int precio, int peso, String danio, String curacion,
@@ -83,9 +82,30 @@ public class ObjetosBasicos {
 
 	@Override
 	public String toString() {
-		return "ObjetosBasicos [id_objetos=" + id_objetos + ", nombre=" + nombre + ", precio=" + precio + ", peso="
-				+ peso + ", danio=" + danio + ", curacion=" + curacion + ", descripcion=" + descripcion + "]";
+		return "Nombre: " + nombre + 
+				"\nDescripcion: " + descripcion + 
+				"\nPeso: "	+ peso + "lb" +
+				"\nDanio: " + danio + 
+				"\nCuracion: " + curacion +  
+				"\nPrecio: " + precio + "g";
 	}
 	
+	public String getlistPrefix() {
+		int p = getId_objetos();
+		if (p < 10) {
+			return "300" + p;
+		} else if (p < 100) {
+			return "30" + p;
+		} else {
+			return "3" + p;
+		}
+	}
 	
+	public String toStringHeadHtml() { 
+		return getlistPrefix() + " - " + nombre; 
+	}
+	
+	public String toStringTiendaListHtml() { 
+		return getlistPrefix() + "-" + nombre + " - " + precio + "g\n"; 
+	}
 }

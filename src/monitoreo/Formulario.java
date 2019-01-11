@@ -1,6 +1,8 @@
 package monitoreo;
 
+import java.sql.SQLException;
 
+import db.DBMetada;
 
 /**
  *
@@ -13,10 +15,21 @@ public class Formulario extends javax.swing.JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	public Formulario() {
         initComponents();
+        setTitle("JharConsole");
+        setResizable(false);
+        setLocationRelativeTo(null);
+        initMetadataComponents();
     }
-                   
+    private void initMetadataComponents() {
+    	dbMetada = new DBMetada();
+    	firstMessage();
+    	
+    	
+    }
+	
     private void initComponents() {
 
         jMenu1 = new javax.swing.JMenu();
@@ -207,51 +220,53 @@ public class Formulario extends javax.swing.JFrame {
     }                      
 
     private void itemSalirActionPerformed(java.awt.event.ActionEvent evt) {                                          
-       
+       adminMonitor = new AdminMonitor();
+       this.setVisible(false);
+       adminMonitor.setVisible(true);
     }                                         
 
     private void botonSelectActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        
+       area_comandos.setText(botonSelect.getText());
     }                                           
 
     private void botonInsertIntoActionPerformed(java.awt.event.ActionEvent evt) {                                                
-      
+      area_comandos.setText(botonInsertInto.getText());
     }                                               
 
     private void botonDeleteActionPerformed(java.awt.event.ActionEvent evt) {                                            
-       
+       area_comandos.setText(botonDelete.getText());
     }                                           
 
     private void botonUpdateActionPerformed(java.awt.event.ActionEvent evt) {                                            
-       
+       area_comandos.setText(botonUpdate.getText());
     }                                           
 
     private void botonVALUESActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        
+        area_comandos.setText(area_comandos.getText()+" "+botonVALUES.getText());
     }                                           
 
     private void botonSetActionPerformed(java.awt.event.ActionEvent evt) {                                         
-       
+       area_comandos.setText(area_comandos.getText()+" "+botonSet.getText());
     }                                        
 
     private void botonWhereActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        
+        area_comandos.setText(area_comandos.getText()+" "+botonWhere.getText());
     }                                          
 
     private void botonFROMActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        
+        area_comandos.setText(area_comandos.getText()+" "+botonFROM.getText());
     }                                         
 
     private void botonDropActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        
+        area_comandos.setText(botonDrop.getText());
     }                                         
 
     private void botonTableActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        
+        area_comandos.setText(area_comandos.getText()+" "+botonTable.getText());
     }                                          
 
     private void botonDatabaseActionPerformed(java.awt.event.ActionEvent evt) {                                              
-       
+       area_comandos.setText(area_comandos.getText()+" "+botonDatabase.getText());
     }                                             
 
    
@@ -280,8 +295,9 @@ public class Formulario extends javax.swing.JFrame {
             }
         });
     }
-
-                      
+    
+    private AdminMonitor adminMonitor;
+    private DBMetada dbMetada;
     private javax.swing.JTextArea Console;
     private javax.swing.JMenu acciones_db;
     private javax.swing.JTextField area_comandos;
@@ -304,5 +320,23 @@ public class Formulario extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenu menuArchivo;
-                     
+    
+    private void firstMessage() {
+    	String cadenaInicial;
+    	String stringTable="";
+    	
+    	try {
+    		cadenaInicial="======================================== \n" +"+ ESQUEMA DE LA BASE DE DATOS + \n"+ "+ Nombre: "+dbMetada.getNombre()+ "+ \n"
+    		+"+ Driver: "+dbMetada.getDriver() +"+ \n" +"+ URL: "+dbMetada.getUrl() +"+ \n"
+    		+ "+ Usuario: "+ dbMetada.getUserName() +"+ \n" +"========================================";
+    		Console.setText(cadenaInicial);
+    		
+    		
+    		
+    	}catch (SQLException sql) {
+			// TODO: handle exception
+    		Console.setText(Console.getText()+ "\n" + sql.getMessage());
+		}
+    }
+    
 }
