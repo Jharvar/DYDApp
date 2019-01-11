@@ -8,18 +8,16 @@ import clases.ObjetosBasicos;
 import db.DB_Tienda;
 
 public class ThalantyrHelper {
-
 	private DB_Tienda tiendaDB = new DB_Tienda();
 
 	/*
 	 * CMD /tienda
 	 */
 	public String CMDtienda(long chat_id, ArrayList<String> userInput) {
-		
 		// "/tienda"
 		if (userInput.size() == 1) {
 			return getCategories(chat_id, userInput);
-			
+
 		} else if (userInput.size() == 2) {
 			// "/tienda X"
 			if (userInput.get(1).length() == 1) {
@@ -71,14 +69,13 @@ public class ThalantyrHelper {
 	public String getArmaString() {
 		String headOut = "Thalantyr's place.\nARMAS.";
 		String bodyOut = "";
-		String statOut = "Drizzt Do'Urden - 999999g";
 		ArrayList<?> a = tiendaDB.keepObjects(1);
 		Armas arm = new Armas();
 		for (Object object : a) {
 			arm = (Armas) object;
 			bodyOut += arm.toStringTiendaListHtml();
 		}
-		return fortmatHtmlList(headOut, bodyOut, statOut);
+		return fortmatHtmlList(headOut, bodyOut);
 	}
 
 	/*
@@ -87,14 +84,13 @@ public class ThalantyrHelper {
 	public String getArmadurasString() {
 		String headOut = "Thalantyr's place.\nARMADURAS.";
 		String bodyOut = "";
-		String statOut = "Drizzt Do'Urden - 999999g";
 		ArrayList<?> a = tiendaDB.keepObjects(2);
 		Armaduras arm = new Armaduras();
 		for (Object object : a) {
 			arm = (Armaduras) object;
 			bodyOut += arm.toStringTiendaListHtml();
 		}
-		return fortmatHtmlList(headOut, bodyOut, statOut);
+		return fortmatHtmlList(headOut, bodyOut);
 	}
 
 	/*
@@ -103,33 +99,30 @@ public class ThalantyrHelper {
 	public String getBasicObjectString() {
 		String headOut = "Thalantyr's place.\nOBJETOS BASICOS.";
 		String bodyOut = "";
-		String statOut = "Drizzt Do'Urden - 999999g";
 		ArrayList<?> a = tiendaDB.keepObjects(3);
 		ObjetosBasicos ob = new ObjetosBasicos();
 		for (Object object : a) {
 			ob = (ObjetosBasicos) object;
 			bodyOut += ob.toStringTiendaListHtml();
 		}
-		return fortmatHtmlList(headOut, bodyOut, statOut);
+		return fortmatHtmlList(headOut, bodyOut);
 	}
-	
+
 	/*
 	 * Formato HTML con head + body + stats
 	 */
-	public String fortmatHtmlList(String head, String body, String stats) {
+	public String fortmatHtmlList(String head, String body) {
 		String l = "+ + + + + + + + + + + + + +\n";
 		String h = l + head + "\n" + l;
 		String b = "<code>" + body + "</code>";
-		String s = l + stats + "\n" + l;
-		return h + b + s;
+		return h + b;
 	}
-	
+
 	/*
 	 * Obtiene lista de categorias de la BD
 	 */
 	public ArrayList<Integer> getAvaliableCategories() {
 		ArrayList<Integer> outList = new ArrayList<>();
-
 		ArrayList<Categorias> c = tiendaDB.keepCategories();
 		for (Categorias catObj : c) {
 			outList.add(catObj.getId_categoria());
@@ -148,26 +141,31 @@ public class ThalantyrHelper {
 		case 1:
 			Armas wep = new Armas();
 			wep = tiendaDB.getWeapon(obj);
+			if (wep == null)
+				return null;
 			headOut += wep.toStringHeadHtml();
 			bodyOut += wep.toString() + "\n";
 			break;
 		case 2:
 			Armaduras arm = new Armaduras();
 			arm = tiendaDB.getArmor(obj);
+			if (arm == null)
+				return null;
 			headOut += arm.toStringHeadHtml();
 			bodyOut += arm.toString() + "\n";
 			break;
 		case 3:
 			ObjetosBasicos ob = new ObjetosBasicos();
 			ob = tiendaDB.getBasicObject(obj);
+			if (ob == null)
+				return null;
 			headOut += ob.toStringHeadHtml();
 			bodyOut += ob.toString() + "\n";
 			break;
 		default:
 			break;
 		}
-		String statOut = "Drizzt Do'Urden - 999999g";
-		return fortmatHtmlList(headOut, bodyOut, statOut);
+		return fortmatHtmlList(headOut, bodyOut);
 	}
 
 	/*
@@ -225,5 +223,4 @@ public class ThalantyrHelper {
 		}
 		return 0;
 	}
-
 }

@@ -12,9 +12,7 @@ public class ThalantyrBot extends TelegramLongPollingBot {
 	private String helpSTR = "<b>Welcome to Thalantyrs place!</b>\n-\n"
 			+ "<b>/tienda</b> -- Ver categorias.\n"
 			+ "<b>/tienda X</b> -- Lista categoria.\n"
-			+ "<b>/tienda XXXX</b>-- Objeto.\n"
-			+ "<b>/comprar XXXX</b> -- Compra.\n"
-			+ "<b>/vender XXXX</b> -- Vende.\n";
+			+ "<b>/tienda XXXX</b>-- Objeto.\n";
 
 	public ThalantyrBot() {
 		thelper = new ThalantyrHelper();
@@ -28,7 +26,6 @@ public class ThalantyrBot extends TelegramLongPollingBot {
 	@Override
 	public void onUpdateReceived(Update update) {
 		if (update.hasMessage() && update.getMessage().hasText()) {
-			
 			// Guarda chat_id y el input (string)
 			long chat_id = update.getMessage().getChatId();
 			String userInputString = update.getMessage().getText();
@@ -37,32 +34,16 @@ public class ThalantyrBot extends TelegramLongPollingBot {
 			// Tokenizer del string input para enumerar argumentos
 			ArrayList<String> userInput = getInputArray(userInputString);
 			
-			/*
-			 *  Valida si el comando esta disponible,
-			 *  si es un comando registrado entra en el switch.
-			 */
 			String cmd = getCommand(userInput);
-			if (cmd != null) {
-				switch (cmd) {
-				case "/tienda":
-					String outStringTienda = thelper.CMDtienda(chat_id, userInput);
-					if (outStringTienda != null) {
-						enviarMensaje(chat_id, (thelper.CMDtienda(chat_id, userInput)));
-					} else {
-						enviarError(chat_id);
-					}
-					break;
-				case "/comprar":
-					break;
-				case "/vender":
-					break;
-				case "/help":
-					enviarMensaje(chat_id, helpSTR);
-					break;
-				default:
+			if (userInput.get(0).equals("/tienda")) {
+				String outStringTienda = thelper.CMDtienda(chat_id, userInput);
+				if (outStringTienda != null) {
+					enviarMensaje(chat_id, (thelper.CMDtienda(chat_id, userInput)));
+				} else {
 					enviarError(chat_id);
-					break;
 				}
+			} else if(userInput.get(0).equals("/help")) {
+				enviarMensaje(chat_id, helpSTR);
 			} else {
 				enviarError(chat_id);
 			}
@@ -87,7 +68,7 @@ public class ThalantyrBot extends TelegramLongPollingBot {
 	 * Valida el comando y devuelve un string con el nombre del comando
 	 */
 	public String getCommand(ArrayList<String> p) {
-		String[] avaliableCommandas = { "/tienda", "/comprar", "/vender", "/help" };
+		String[] avaliableCommandas = { "/tienda", "/help" };
 		for (int i = 0; i < avaliableCommandas.length; i++) {
 			if (p.get(0).equals(avaliableCommandas[i])) {
 				return p.get(0);
