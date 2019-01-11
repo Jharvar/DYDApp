@@ -9,6 +9,12 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class ThalantyrBot extends TelegramLongPollingBot {
 	private ThalantyrHelper thelper;
+	private String helpSTR = "<b>Welcome to Thalantyrs place!</b>\n-\n"
+			+ "<b>/tienda</b> -- Ver categorias.\n"
+			+ "<b>/tienda X</b> -- Lista categoria.\n"
+			+ "<b>/tienda XXXX</b>-- Objeto.\n"
+			+ "<b>/comprar XXXX</b> -- Compra.\n"
+			+ "<b>/vender XXXX</b> -- Vende.\n";
 
 	public ThalantyrBot() {
 		thelper = new ThalantyrHelper();
@@ -45,15 +51,14 @@ public class ThalantyrBot extends TelegramLongPollingBot {
 					} else {
 						enviarError(chat_id);
 					}
-					
 					break;
-
 				case "/comprar":
 					break;
-
 				case "/vender":
 					break;
-
+				case "/help":
+					enviarMensaje(chat_id, helpSTR);
+					break;
 				default:
 					enviarError(chat_id);
 					break;
@@ -82,7 +87,7 @@ public class ThalantyrBot extends TelegramLongPollingBot {
 	 * Valida el comando y devuelve un string con el nombre del comando
 	 */
 	public String getCommand(ArrayList<String> p) {
-		String[] avaliableCommandas = { "/tienda", "/comprar", "/vender" };
+		String[] avaliableCommandas = { "/tienda", "/comprar", "/vender", "/help" };
 		for (int i = 0; i < avaliableCommandas.length; i++) {
 			if (p.get(0).equals(avaliableCommandas[i])) {
 				return p.get(0);

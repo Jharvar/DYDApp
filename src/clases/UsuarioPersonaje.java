@@ -49,6 +49,4 @@ public class UsuarioPersonaje {
 		return "UsuarioPersonaje [idPersonaje=" + idPersonaje + ", npersonaje=" + npersonaje + ", clase=" + clase
 				+ ", dinero=" + dinero + "]";
 	}
-	
-	
 }

@@ -11,7 +11,6 @@ public class ObjetosBasicos {
 	private String descripcion;
 	
 	public ObjetosBasicos() {
-		//constructor por defecto
 	}
 
 	public ObjetosBasicos(int id_objetos, String nombre, int precio, int peso, String danio, String curacion,

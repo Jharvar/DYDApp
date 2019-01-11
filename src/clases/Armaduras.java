@@ -108,11 +108,10 @@ public class Armaduras {
 			return "Nombre: " + nombre + 
 					"\nBonif.CA: " + boni_CA +
 					"\nBonif.DEF: " + boni_defensa +
-					"\nPeso: "	+ peso + "lb" +
+					"\nPeso: "	+ peso + " lb." +
 					"\nPenalizador: " + penalizador + 
 					"\nFallo Conj: " + fallo_conjuro +
 					"\nVelocidad: " + velocidad +
 					"\nPrecio: " + precio + "g";
 		}
-	
 }

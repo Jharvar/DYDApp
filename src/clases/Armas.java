@@ -13,7 +13,6 @@ public class Armas {
 	private String artefacto;
 	
 	public Armas() {
-		//constructor por defecto
 	}
 
 	public Armas(int id_armas, String nombre, int precio, String danio, String critico, String distancia, int peso,
@@ -126,7 +125,7 @@ public class Armas {
 				"\nDaño: " + danio +
 				"\nTipo Daño: " + tipo_danio +
 				"\nCritico: " + critico +
-				"\nPeso: "	+ peso + "lb" +
+				"\nPeso: "	+ peso + " lb." +
 				"\nDistancia: " + distancia + 
 				"\nArtefacto: " + artefacto +
 				"\nPrecio: " + precio + "g";
