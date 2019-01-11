@@ -42,5 +42,10 @@ public class Categorias {
 				+ id_objetos + "]";
 	}
 	
-	
+	public String toStringTienda() { 
+		return id_categoria + " - " + nombre_categoria; 
+	}
+	public String toStringTiendaHtml() { 
+		return id_categoria + " - " + nombre_categoria + "\n"; 
+	}
 }

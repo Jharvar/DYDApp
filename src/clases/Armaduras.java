@@ -11,6 +11,10 @@ public class Armaduras {
 	private String fallo_conjuro;
 	private String velocidad;
 	private String peso;
+	
+	public Armaduras() {
+		
+	}
 	public Armaduras(int id_armaduras, String nombre, int precio, int boni_CA, int boni_defensa, int penalizador,
 			String fallo_conjuro, String velocidad, String peso) {
 		
@@ -78,12 +82,36 @@ public class Armaduras {
 	public void setPeso(String peso) {
 		this.peso = peso;
 	}
-	@Override
-	public String toString() {
-		return "Armaduras [id_armaduras=" + id_armaduras + ", nombre=" + nombre + ", precio=" + precio + ", boni_CA="
-				+ boni_CA + ", boni_defensa=" + boni_defensa + ", penalizador=" + penalizador + ", fallo_conjuro="
-				+ fallo_conjuro + ", velocidad=" + velocidad + ", peso=" + peso + "]";
+	
+	public String getlistPrefix() {
+		int p = getId_armaduras();
+		if (p < 10) {
+			return "200" + p;
+		} else if (p < 100) {
+			return "20" + p;
+		} else {
+			return "2" + p;
+		}
+	}
+	
+	public String toStringHeadHtml() { 
+		return getlistPrefix() + " - " + nombre; 
 	}
 	
 	
+	public String toStringTiendaListHtml() { 
+		return getlistPrefix() + "-" + nombre + " - " + precio + "g\n"; 
+	}
+	
+	@Override
+	public String toString() {
+			return "Nombre: " + nombre + 
+					"\nBonif.CA: " + boni_CA +
+					"\nBonif.DEF: " + boni_defensa +
+					"\nPeso: "	+ peso + " lb." +
+					"\nPenalizador: " + penalizador + 
+					"\nFallo Conj: " + fallo_conjuro +
+					"\nVelocidad: " + velocidad +
+					"\nPrecio: " + precio + "g";
+		}
 }
