@@ -17,20 +17,18 @@ public class DB_Tienda extends DB {
 	private Armas weapon;
 	private Armaduras armor;
 	private ObjetosBasicos basicObject;
-<<<<<<< HEAD
+
 	private ObjetoMaravilloso magicObject;
-=======
->>>>>>> refs/remotes/origin/master
+
 	// Atributos de la clase
 	private ArrayList<Categorias> listaCategorias;
 	private ArrayList<Armas> listaArmas;
 	private ArrayList<Armaduras> listaArmaduras;
 	private ArrayList<ObjetosBasicos> listaObjetosBasicos;
-<<<<<<< HEAD
 	private ArrayList<ObjetoMaravilloso>listaObjetosMaravillosos;
-=======
 
->>>>>>> refs/remotes/origin/master
+
+
 	// Atributos de operaciones
 	private Conexion conexion;
 	private Statement st;
@@ -40,13 +38,13 @@ public class DB_Tienda extends DB {
 		conexion = new Conexion();
 
 	}
-<<<<<<< HEAD
+
 	/**
 	 * 
 	 * @return {@link ArrayList}
 	 */
-=======
->>>>>>> refs/remotes/origin/master
+
+
 
 	public ArrayList<Categorias> keepCategories() {
 		try {
@@ -89,12 +87,10 @@ public class DB_Tienda extends DB {
 				rs = st.executeQuery("SELECT * FROM objetos_basicos");
 				return keepBasicObjects(rs);
 			case 4:
-<<<<<<< HEAD
+
 				rs = st.executeQuery("SELECT * FROM objeto_maravilloso");
 				return keepMagicObject(rs);
-=======
-				return null;
->>>>>>> refs/remotes/origin/master
+			
 
 			}
 			return null;
@@ -159,17 +155,14 @@ public class DB_Tienda extends DB {
 		conexion.closeConexion();
 		return listaObjetosBasicos;
 	}
-<<<<<<< HEAD
+
 	/**
 	 * 
 	 * @param rs
 	 * @return {@link ArrayList}
 	 * @throws SQLException
 	 */
-=======
->>>>>>> refs/remotes/origin/master
 
-<<<<<<< HEAD
 	public ArrayList<ObjetoMaravilloso> keepMagicObject(ResultSet rs) throws SQLException{
 		listaObjetosMaravillosos = new ArrayList<>();
 		while(rs.next()) {
@@ -199,31 +192,14 @@ public class DB_Tienda extends DB {
 			return getBasicObject(id_objeto);
 		case 4:
 			return getMagicObject(id_objeto);
-=======
-	/**
-	 * 
-	 * @param categoria
-	 * @param id_objeto
-	 * @return Object
-	 * @throws SQLException
-	 */
-	public Object getObjectToCategoria(int categoria, int id_objeto) {
-		switch (categoria) {
-		case 1:
-			return getWeapon(id_objeto);
-		case 2:
-			return getArmor(id_objeto);
-		case 3:
-			return getBasicObject(id_objeto);
->>>>>>> refs/remotes/origin/master
 		}
 		return null;
 	}
 
+
 	/**
 	 * 
 	 * @param id_objeto
-<<<<<<< HEAD
 	 * @return {@link Armas}
 	 * 
 	 */
@@ -319,81 +295,5 @@ public class DB_Tienda extends DB {
 			System.out.println(e.getMessage());
 			return null;
 		}
-=======
-	 * @return Armas
-	 * @throws SQLException
-	 */
-	public Armas getWeapon(int id_objeto) {
-		try {
-			conexion.openConexion();
-			st = conexion.openConexion().createStatement();
-			rs = st.executeQuery("SELECT * FROM armas WHERE id_armas='" + id_objeto + "'");
-			if (rs.first()) {
-				weapon = new Armas(rs.getInt("id_armas"), rs.getString("nombre"), rs.getInt("precio"),
-						rs.getString("danio"), rs.getString("critico"), rs.getString("distancia"), rs.getInt("peso"),
-						rs.getString("tipo_danio"), rs.getString("artefacto"));
-			} else {
-				System.out.println("Registro no encontrado");
-			}
-			rs.close();
-			st.close();
-			conexion.closeConexion();
-			return weapon;
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			return null;
-		}
-
-	}
-
-	/**
-	 * 
-	 * @param id_objeto
-	 * @return Armaduras
-	 * @throws SQLException
-	 */
-	public Armaduras getArmor(int id_objeto){
-		try {
-			conexion.openConexion();
-			st = conexion.openConexion().createStatement();
-			rs = st.executeQuery("SELECT * FROM armaduras where id_armaduras='" + id_objeto + "'");
-			if (rs.first()) {
-				armor = new Armaduras(rs.getInt("id_armaduras"), rs.getString("nombre"), rs.getInt("precio"),
-						rs.getInt("boni_CA"), rs.getInt("boni_defensa"), rs.getInt("penalizador"),
-						rs.getString("fallo_conjuro"), rs.getString("velocidad"), rs.getString("peso"));
-			}
-			rs.close();
-			st.close();
-			conexion.closeConexion();
-			return armor;
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			return null;
-		}
-		
-	}
-
-	/**
-	 * 
-	 * @param id_objeto
-	 * @return ObjectosBasicos
-	 * @throws SQLException
-	 */
-	public ObjetosBasicos getBasicObject(int id_objeto) {
-		try {
-			conexion.openConexion();
-			st = conexion.openConexion().createStatement();
-			rs = st.executeQuery("SELECT * FROM objetos_basicos WHERE id_objetos='" + id_objeto + "'");
-			if (rs.first()) {
-				basicObject = new ObjetosBasicos(rs.getInt("id_objetos"), rs.getString("nombre"), rs.getInt("precio"),
-						rs.getInt("peso"), rs.getString("danio"), rs.getString("curacion"), rs.getString("descripcion"));
-			}
-			return basicObject;
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			return null;
-		}
-		
->>>>>>> refs/remotes/origin/master
 	}
 }
