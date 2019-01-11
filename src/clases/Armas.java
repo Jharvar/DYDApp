@@ -101,16 +101,34 @@ public class Armas {
 		this.artefacto = artefacto;
 	}
 
-	public String toStringTiendaListHtml(String fix) { 
-		return fix + id_armas + "-" + nombre + " - " + precio + "g\n"; 
+	public String getlistPrefix() {
+		int p = getId_armas();
+		if (p < 10) {
+			return "100" + p;
+		} else if (p < 100) {
+			return "10" + p;
+		} else {
+			return "1" + p;
+		}
+	}
+	
+	public String toStringHeadHtml() { 
+		return getlistPrefix() + " - " + nombre; 
+	}
+	
+	public String toStringTiendaListHtml() { 
+		return getlistPrefix() + "-" + nombre + " - " + precio + "g\n"; 
 	}
 	
 	@Override
 	public String toString() {
-		return "Armas [id_armas=" + id_armas + ", nombre=" + nombre + ", precio=" + precio + ", danio=" + danio
-				+ ", critico=" + critico + ", distancia=" + distancia + ", peso=" + peso + ", tipo_danio=" + tipo_danio
-				+ ", artefacto=" + artefacto + "]";
+		return "Nombre: " + nombre + 
+				"\nDaño: " + danio +
+				"\nTipo Daño: " + tipo_danio +
+				"\nCritico: " + critico +
+				"\nPeso: "	+ peso + "lb" +
+				"\nDistancia: " + distancia + 
+				"\nArtefacto: " + artefacto +
+				"\nPrecio: " + precio + "g";
 	}
-	
-	
 }

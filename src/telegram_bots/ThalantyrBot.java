@@ -16,7 +16,7 @@ public class ThalantyrBot extends TelegramLongPollingBot {
 
 	@Override
 	public String getBotUsername() {
-		return "ZaiussBot";
+		return "ThalantyrMarket";
 	}
 
 	@Override
@@ -97,7 +97,7 @@ public class ThalantyrBot extends TelegramLongPollingBot {
 	public Boolean enviarMensaje(long chat_id, String txt) {
 		SendMessage sm = new SendMessage();
 		sm.enableHtml(true);
-		sm.setChatId(chat_id).setText("<code>" + txt + "</code>");
+		sm.setChatId(chat_id).setText(txt);
 		try {
 			execute(sm);
 			return true;
@@ -126,6 +126,6 @@ public class ThalantyrBot extends TelegramLongPollingBot {
 
 	@Override
 	public String getBotToken() {
-		return "654542961:AAGZDxcg6owBy-P-3oAH8pxQr6ppDfcXe0U";
+		return "690554555:AAGKyYRmZk8qmopTxz4q586Si902tPKdreQ";
 	}
 }

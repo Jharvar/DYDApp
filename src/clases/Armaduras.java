@@ -83,16 +83,36 @@ public class Armaduras {
 		this.peso = peso;
 	}
 	
-	public String toStringTiendaListHtml(String fix) { 
-		return fix + id_armaduras + "-" + nombre + " - " + precio + "g\n"; 
+	public String getlistPrefix() {
+		int p = getId_armaduras();
+		if (p < 10) {
+			return "200" + p;
+		} else if (p < 100) {
+			return "20" + p;
+		} else {
+			return "2" + p;
+		}
+	}
+	
+	public String toStringHeadHtml() { 
+		return getlistPrefix() + " - " + nombre; 
+	}
+	
+	
+	public String toStringTiendaListHtml() { 
+		return getlistPrefix() + "-" + nombre + " - " + precio + "g\n"; 
 	}
 	
 	@Override
 	public String toString() {
-		return "Armaduras [id_armaduras=" + id_armaduras + ", nombre=" + nombre + ", precio=" + precio + ", boni_CA="
-				+ boni_CA + ", boni_defensa=" + boni_defensa + ", penalizador=" + penalizador + ", fallo_conjuro="
-				+ fallo_conjuro + ", velocidad=" + velocidad + ", peso=" + peso + "]";
-	}
-	
+			return "Nombre: " + nombre + 
+					"\nBonif.CA: " + boni_CA +
+					"\nBonif.DEF: " + boni_defensa +
+					"\nPeso: "	+ peso + "lb" +
+					"\nPenalizador: " + penalizador + 
+					"\nFallo Conj: " + fallo_conjuro +
+					"\nVelocidad: " + velocidad +
+					"\nPrecio: " + precio + "g";
+		}
 	
 }

@@ -83,11 +83,30 @@ public class ObjetosBasicos {
 
 	@Override
 	public String toString() {
-		return "ObjetosBasicos [id_objetos=" + id_objetos + ", nombre=" + nombre + ", precio=" + precio + ", peso="
-				+ peso + ", danio=" + danio + ", curacion=" + curacion + ", descripcion=" + descripcion + "]";
+		return "Nombre: " + nombre + 
+				"\nDescripcion: " + descripcion + 
+				"\nPeso: "	+ peso + "lb" +
+				"\nDanio: " + danio + 
+				"\nCuracion: " + curacion +  
+				"\nPrecio: " + precio + "g";
 	}
 	
-	public String toStringTiendaListHtml(String fix) { 
-		return fix + id_objetos + "-" + nombre + " - " + precio + "g\n"; 
+	public String getlistPrefix() {
+		int p = getId_objetos();
+		if (p < 10) {
+			return "300" + p;
+		} else if (p < 100) {
+			return "30" + p;
+		} else {
+			return "3" + p;
+		}
+	}
+	
+	public String toStringHeadHtml() { 
+		return getlistPrefix() + " - " + nombre; 
+	}
+	
+	public String toStringTiendaListHtml() { 
+		return getlistPrefix() + "-" + nombre + " - " + precio + "g\n"; 
 	}
 }
