@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class ThalantyrBot extends TelegramLongPollingBot {
-	
+
 	private ThalantyrHelper thelper;
 	private String helpSTR = "<b>Welcome to Thalantyrs place!</b>\n-\n"
 			+ "<b>/tienda</b> -- Ver categorias.\n"

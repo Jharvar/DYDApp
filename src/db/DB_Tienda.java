@@ -39,10 +39,12 @@ public class DB_Tienda extends DB {
 
 	}
 
+
 	/**
 	 * 
 	 * @return {@link ArrayList}
 	 */
+
 
 
 
@@ -87,11 +89,8 @@ public class DB_Tienda extends DB {
 				rs = st.executeQuery("SELECT * FROM objetos_basicos");
 				return keepBasicObjects(rs);
 			case 4:
-
 				rs = st.executeQuery("SELECT * FROM objeto_maravilloso");
 				return keepMagicObject(rs);
-			
-
 			}
 			return null;
 		} catch (SQLException e) {
@@ -163,6 +162,7 @@ public class DB_Tienda extends DB {
 	 * @throws SQLException
 	 */
 
+
 	public ArrayList<ObjetoMaravilloso> keepMagicObject(ResultSet rs) throws SQLException{
 		listaObjetosMaravillosos = new ArrayList<>();
 		while(rs.next()) {
@@ -182,6 +182,7 @@ public class DB_Tienda extends DB {
 	 * @return {@link Object}
 	 * 
 	 */
+
 	public Object getObjectToCategoria(int categoria, int id_objeto) {
 		switch (categoria) {
 		case 1:
@@ -272,6 +273,7 @@ public class DB_Tienda extends DB {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return null;
+
 		}
 		
 	}
@@ -308,7 +310,9 @@ public class DB_Tienda extends DB {
 		rs = st.executeQuery("SELECT * FROM jugadores");
 		while(rs.next()) {
 			listaJugadores.add(new Jugadores(rs.getInt("id_jugador"), rs.getString("personaje"), rs.getString("clase"), rs.getString("dinero")));
+
 		}
+
 		rs.close();
 		st.close();
 		conexion.closeConexion();
@@ -317,7 +321,9 @@ public class DB_Tienda extends DB {
 			e.printStackTrace();
 		}
 		return listaJugadores;
+
 	}
+
 	/**
 	 * 
 	 * @param user
@@ -343,4 +349,5 @@ public class DB_Tienda extends DB {
 	}
 		return false;
 }
+
 }
