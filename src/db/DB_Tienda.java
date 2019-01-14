@@ -88,9 +88,13 @@ public class DB_Tienda extends DB {
 				return keepBasicObjects(rs);
 			case 4:
 
+
 				rs = st.executeQuery("SELECT * FROM objeto_maravilloso");
 				return keepMagicObject(rs);
 			
+
+			
+
 
 			}
 			return null;
@@ -191,7 +195,7 @@ public class DB_Tienda extends DB {
 		case 3:
 			return getBasicObject(id_objeto);
 		case 4:
-			return getMagicObject(id_objeto);
+			return "Proximamente";
 		}
 		return null;
 	}
@@ -275,25 +279,6 @@ public class DB_Tienda extends DB {
 		}
 		
 	}
-	/**
-	 * 
-	 * @param id_objeto
-	 * @return {@link ObjetoMaravilloso}
-	 */
-	
-	public ObjetoMaravilloso getMagicObject(int id_objeto) {
-		try {
-			conexion.openConexion();
-			st = conexion.openConexion().createStatement();
-			rs = st.executeQuery("SELECT * FROM objeto_maravilloso WHERE id_objeto_maravilloso='"+ id_objeto + "'");
-			if(rs.first()) {
-				magicObject = new ObjetoMaravilloso(rs.getInt("id_objeto_maravilloso"), rs.getString("nombre"), rs.getInt("precio"), rs.getInt("peso"), rs.getString("tipo_de_objeto"), rs.getString("descripcion"));
-			}
-			return magicObject;
-		}catch (SQLException e) {
-			// TODO: handle exception
-			System.out.println(e.getMessage());
-			return null;
-		}
-	}
+
+
 }
