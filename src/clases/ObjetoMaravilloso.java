@@ -8,9 +8,12 @@ public class ObjetoMaravilloso {
 	private int peso;
 	private String tipo_de_objeto;
 	private String descripcion;
+	
+	public ObjetoMaravilloso() {
+	}
+	
 	public ObjetoMaravilloso(int id_objeto_maravilloso, String nombre, int precio, int peso, String tipo_de_objeto,
 			String descripcion) {
-		
 		this.id_objeto_maravilloso = id_objeto_maravilloso;
 		this.nombre = nombre;
 		this.precio = precio;

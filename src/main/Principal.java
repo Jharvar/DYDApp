@@ -3,10 +3,7 @@ package main;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.telegram.telegrambots.meta.generics.BotSession;
-
-import telegram_bots.ThalantyrBot;
-
+import telegram_bots.CespenarBot;
 
 public class Principal {
 
@@ -16,14 +13,14 @@ public class Principal {
 		
 		//Instanciamos Bot de Telegram con la Api
 		TelegramBotsApi bostsApi = new TelegramBotsApi();
-			
+		
 		//Registrar nuestro bot
 		try {
 			// Jarvar
 			//bostsApi.registerBot(new TelegramServer());
 			
 			// Zaiuss
-			bostsApi.registerBot(new ThalantyrBot());
+			bostsApi.registerBot(new CespenarBot());
 			
 		}catch (TelegramApiException telAe) {
 			telAe.getCause();
