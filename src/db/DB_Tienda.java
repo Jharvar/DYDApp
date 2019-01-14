@@ -17,7 +17,6 @@ public class DB_Tienda extends DB {
 	private Armas weapon;
 	private Armaduras armor;
 	private ObjetosBasicos basicObject;
-
 	private ObjetoMaravilloso magicObject;
 
 	// Atributos de la clase
