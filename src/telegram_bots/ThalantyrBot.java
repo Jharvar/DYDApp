@@ -111,8 +111,9 @@ public class ThalantyrBot extends TelegramLongPollingBot {
 			telegramException.printStackTrace();
 			return false;
 		}
+		
 	}
-
+	
 	/*
 	 * Envia error
 	 */

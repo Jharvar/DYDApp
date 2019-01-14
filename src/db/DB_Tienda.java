@@ -340,17 +340,17 @@ public class DB_Tienda extends DB {
 	 * @return <code>true</code>
 	 */
 	
-	public boolean isClient(String user, String money) {
+	public boolean isClient(int chatId) {
 		if(listaJugadores.isEmpty()) {
 			listaJugadores = getJugadores();
 			for(int i =0; i < listaJugadores.size(); i++) {
-				if(user.equals(listaJugadores.get(i).getNpersonaje()) && money.equals(listaJugadores.get(i).getDinero())) {
+				if(chatId==listaJugadores.get(i).getIdPersonaje()) {
 					return true;
 				}
 			}
 		}else {
 			for(int i =0; i < listaJugadores.size(); i++) {
-				if(user.equals(listaJugadores.get(i).getNpersonaje()) && money.equals(listaJugadores.get(i).getDinero())) {
+				if(chatId==listaJugadores.get(i).getIdPersonaje()) {
 					return true;
 				}
 		}

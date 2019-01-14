@@ -3,6 +3,7 @@ package main;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.meta.generics.BotSession;
 
 import telegram_bots.ThalantyrBot;
 
@@ -15,7 +16,7 @@ public class Principal {
 		
 		//Instanciamos Bot de Telegram con la Api
 		TelegramBotsApi bostsApi = new TelegramBotsApi();
-		
+			
 		//Registrar nuestro bot
 		try {
 			// Jarvar
