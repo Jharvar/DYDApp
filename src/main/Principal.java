@@ -5,7 +5,7 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import telegram_bots.ThalantyrBot;
-import telegram_bots.TelegramServer;
+
 
 public class Principal {
 

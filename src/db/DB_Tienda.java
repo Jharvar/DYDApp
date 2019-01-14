@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import clases.Armaduras;
 import clases.Armas;
 import clases.Categorias;
+import clases.Jugadores;
 import clases.ObjetoMaravilloso;
 import clases.ObjetosBasicos;
 
@@ -17,7 +18,6 @@ public class DB_Tienda extends DB {
 	private Armas weapon;
 	private Armaduras armor;
 	private ObjetosBasicos basicObject;
-
 	private ObjetoMaravilloso magicObject;
 
 	// Atributos de la clase
@@ -27,7 +27,7 @@ public class DB_Tienda extends DB {
 	private ArrayList<ObjetosBasicos> listaObjetosBasicos;
 	private ArrayList<ObjetoMaravilloso>listaObjetosMaravillosos;
 
-
+	private ArrayList<Jugadores> listaJugadores;
 
 	// Atributos de operaciones
 	private Conexion conexion;
@@ -38,6 +38,7 @@ public class DB_Tienda extends DB {
 		conexion = new Conexion();
 
 	}
+
 
 	/**
 	 * 
@@ -87,15 +88,8 @@ public class DB_Tienda extends DB {
 				rs = st.executeQuery("SELECT * FROM objetos_basicos");
 				return keepBasicObjects(rs);
 			case 4:
-
-
 				rs = st.executeQuery("SELECT * FROM objeto_maravilloso");
 				return keepMagicObject(rs);
-			
-
-			
-
-
 			}
 			return null;
 		} catch (SQLException e) {
@@ -160,12 +154,15 @@ public class DB_Tienda extends DB {
 		return listaObjetosBasicos;
 	}
 
+
+
 	/**
 	 * 
 	 * @param rs
 	 * @return {@link ArrayList}
 	 * @throws SQLException
 	 */
+
 
 	public ArrayList<ObjetoMaravilloso> keepMagicObject(ResultSet rs) throws SQLException{
 		listaObjetosMaravillosos = new ArrayList<>();
@@ -186,6 +183,7 @@ public class DB_Tienda extends DB {
 	 * @return {@link Object}
 	 * 
 	 */
+
 	public Object getObjectToCategoria(int categoria, int id_objeto) {
 		switch (categoria) {
 		case 1:
@@ -195,15 +193,22 @@ public class DB_Tienda extends DB {
 		case 3:
 			return getBasicObject(id_objeto);
 		case 4:
-			return "Proximamente";
+			
+			return getMagicObject(id_objeto);
+
 		}
 		return null;
 	}
 
 
+
 	/**
+
 	 * 
 	 * @param id_objeto
+	 * 
+	 * @param id_objeto
+
 	 * @return {@link Armas}
 	 * 
 	 */
@@ -276,9 +281,81 @@ public class DB_Tienda extends DB {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return null;
+
 		}
 		
 	}
 
+	/**
+	 * 
+	 * @param id_objeto
+	 * @return {@link ObjetoMaravilloso}
+	 */
+	
+	public ObjetoMaravilloso getMagicObject(int id_objeto) {
+		try {
+			conexion.openConexion();
+			st = conexion.openConexion().createStatement();
+			rs = st.executeQuery("SELECT * FROM objeto_maravilloso WHERE id_objeto_maravilloso='"+ id_objeto + "'");
+			if(rs.first()) {
+				magicObject = new ObjetoMaravilloso(rs.getInt("id_objeto_maravilloso"), rs.getString("nombre"), rs.getInt("precio"), rs.getInt("peso"), rs.getString("tipo_de_objeto"), rs.getString("descripcion"));
+			}
+			return magicObject;
+		}catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+	/**
+	 * 
+	 * @return {@link ArrayList}
+	 */
+	public ArrayList<Jugadores> getJugadores() {
+		try {
+		listaJugadores = new ArrayList<>();
+		conexion.openConexion();
+		st = conexion.openConexion().createStatement();
+		rs = st.executeQuery("SELECT * FROM jugadores");
+		while(rs.next()) {
+			listaJugadores.add(new Jugadores(rs.getInt("id_jugador"), rs.getString("personaje"), rs.getString("clase"), rs.getString("dinero")));
 
+		}
+
+		rs.close();
+		st.close();
+		conexion.closeConexion();
+		}catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return listaJugadores;
+
+	}
+
+	/**
+	 * 
+	 * @param user
+	 * @param money
+	 * @return <code>true</code>
+	 */
+	
+	public boolean isClient(String user, String money) {
+		if(listaJugadores.isEmpty()) {
+			listaJugadores = getJugadores();
+			for(int i =0; i < listaJugadores.size(); i++) {
+				if(user.equals(listaJugadores.get(i).getNpersonaje()) && money.equals(listaJugadores.get(i).getDinero())) {
+					return true;
+				}
+			}
+		}else {
+			for(int i =0; i < listaJugadores.size(); i++) {
+				if(user.equals(listaJugadores.get(i).getNpersonaje()) && money.equals(listaJugadores.get(i).getDinero())) {
+					return true;
+				}
+		}
+		return false;
+	}
+		return false;
+}
 }
