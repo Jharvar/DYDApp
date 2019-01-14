@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import clases.Armaduras;
 import clases.Armas;
 import clases.Categorias;
+import clases.Jugadores;
 import clases.ObjetoMaravilloso;
 import clases.ObjetosBasicos;
 
@@ -25,7 +26,7 @@ public class DB_Tienda extends DB {
 	private ArrayList<Armaduras> listaArmaduras;
 	private ArrayList<ObjetosBasicos> listaObjetosBasicos;
 	private ArrayList<ObjetoMaravilloso>listaObjetosMaravillosos;
-
+	private ArrayList<Jugadores> listaJugadores;
 
 
 	// Atributos de operaciones
@@ -295,4 +296,51 @@ public class DB_Tienda extends DB {
 			return null;
 		}
 	}
+	/**
+	 * 
+	 * @return {@link ArrayList}
+	 */
+	public ArrayList<Jugadores> getJugadores() {
+		try {
+		listaJugadores = new ArrayList<>();
+		conexion.openConexion();
+		st = conexion.openConexion().createStatement();
+		rs = st.executeQuery("SELECT * FROM jugadores");
+		while(rs.next()) {
+			listaJugadores.add(new Jugadores(rs.getInt("id_jugador"), rs.getString("personaje"), rs.getString("clase"), rs.getString("dinero")));
+		}
+		rs.close();
+		st.close();
+		conexion.closeConexion();
+		}catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return listaJugadores;
+	}
+	/**
+	 * 
+	 * @param user
+	 * @param money
+	 * @return <code>true</code>
+	 */
+	
+	public boolean isClient(String user, String money) {
+		if(listaJugadores.isEmpty()) {
+			listaJugadores = getJugadores();
+			for(int i =0; i < listaJugadores.size(); i++) {
+				if(user.equals(listaJugadores.get(i).getNpersonaje()) && money.equals(listaJugadores.get(i).getDinero())) {
+					return true;
+				}
+			}
+		}else {
+			for(int i =0; i < listaJugadores.size(); i++) {
+				if(user.equals(listaJugadores.get(i).getNpersonaje()) && money.equals(listaJugadores.get(i).getDinero())) {
+					return true;
+				}
+		}
+		return false;
+	}
+		return false;
+}
 }
