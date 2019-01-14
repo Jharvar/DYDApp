@@ -1,6 +1,6 @@
 package clases;
 
-public class ObjetosBasicos {
+public class ObjetoBasico {
 
 	private int id_objetos;
 	private String nombre;
@@ -10,10 +10,10 @@ public class ObjetosBasicos {
 	private String curacion;
 	private String descripcion;
 	
-	public ObjetosBasicos() {
+	public ObjetoBasico() {
 	}
 
-	public ObjetosBasicos(int id_objetos, String nombre, int precio, int peso, String danio, String curacion,
+	public ObjetoBasico(int id_objetos, String nombre, int precio, int peso, String danio, String curacion,
 			String descripcion) {
 		this.id_objetos = id_objetos;
 		this.nombre = nombre;

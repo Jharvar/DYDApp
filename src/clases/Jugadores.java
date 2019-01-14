@@ -1,6 +1,6 @@
 package clases;
 
-public class UsuarioPersonaje {
+public class Jugadores {
 	
 	//Atributos de la clase
 	private int idPersonaje;
@@ -14,7 +14,7 @@ public class UsuarioPersonaje {
 	 * @param clase
 	 * @param dinero
 	 */
-	public UsuarioPersonaje(int idPersonaje, String npersonaje, String clase, String dinero) {
+	public Jugadores(int idPersonaje, String npersonaje, String clase, String dinero) {
 		this.idPersonaje = idPersonaje;
 		this.npersonaje = npersonaje;
 		this.clase = clase;

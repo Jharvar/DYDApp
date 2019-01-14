@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import clases.Armaduras;
 import clases.Armas;
 import clases.Categorias;
-import clases.ObjetosBasicos;
+import clases.ObjetoMaravilloso;
+import clases.ObjetoBasico;
 import db.DB_Tienda;
 
-public class ThalantyrHelper {
+public class CespenarHelper {
 	private DB_Tienda tiendaDB = new DB_Tienda();
 
 	/*
@@ -59,7 +60,7 @@ public class ThalantyrHelper {
 		case 3:
 			return getBasicObjectString();
 		default:
-			return "Proximamente ,)";
+			return getWonderObject();
 		}
 	}
 
@@ -100,10 +101,25 @@ public class ThalantyrHelper {
 		String headOut = "Thalantyr's place.\nOBJETOS BASICOS.";
 		String bodyOut = "";
 		ArrayList<?> a = tiendaDB.keepObjects(3);
-		ObjetosBasicos ob = new ObjetosBasicos();
+		ObjetoBasico ob = new ObjetoBasico();
 		for (Object object : a) {
-			ob = (ObjetosBasicos) object;
+			ob = (ObjetoBasico) object;
 			bodyOut += ob.toStringTiendaListHtml();
+		}
+		return fortmatHtmlList(headOut, bodyOut);
+	}
+	
+	/*
+	 * Lista de Objetos Maravillosos
+	 */
+	public String getWonderObject() {
+		String headOut = "Thalantyr's place.\nOBJETOS MARAVILLOSOS.";
+		String bodyOut = "";
+		ArrayList<?> a = tiendaDB.keepObjects(4);
+		ObjetoMaravilloso om = new ObjetoMaravilloso();
+		for (Object object : a) {
+			om = (ObjetoMaravilloso) object;
+			bodyOut += om.toStringTiendaListHtml();
 		}
 		return fortmatHtmlList(headOut, bodyOut);
 	}
@@ -155,12 +171,20 @@ public class ThalantyrHelper {
 			bodyOut += arm.toString() + "\n";
 			break;
 		case 3:
-			ObjetosBasicos ob = new ObjetosBasicos();
+			ObjetoBasico ob = new ObjetoBasico();
 			ob = tiendaDB.getBasicObject(obj);
 			if (ob == null)
 				return null;
 			headOut += ob.toStringHeadHtml();
 			bodyOut += ob.toString() + "\n";
+			break;
+		case 4:
+			ObjetoMaravilloso om = new ObjetoMaravilloso();
+			om = tiendaDB.getMagicObject(obj);
+			if (om == null)
+				return null;
+			headOut += om.toStringHeadHtml();
+			bodyOut += om.toString() + "\n";
 			break;
 		default:
 			break;
@@ -168,6 +192,13 @@ public class ThalantyrHelper {
 		return fortmatHtmlList(headOut, bodyOut);
 	}
 
+	/*
+	 * Comprueba si el chat_id esta en la BD
+	 */
+	public boolean isDBClient(int chatid) {
+		return tiendaDB.isClient(chatid);
+	}
+	
 	/*
 	 * Valida el input y pide string a getObjectString.
 	 */

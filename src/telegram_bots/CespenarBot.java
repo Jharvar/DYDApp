@@ -8,15 +8,13 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-public class ThalantyrBot extends TelegramLongPollingBot {
-	private ThalantyrHelper thelper;
-	private String helpSTR = "<b>OH! Brillantes!!! </b>\n-\n"
-			+ "<b>/tienda</b> -- Ver categorias.\n"
-			+ "<b>/tienda X</b> -- Lista categoria.\n"
-			+ "<b>/tienda XXXX</b>-- Objeto.\n";
+public class CespenarBot extends TelegramLongPollingBot {
+	private CespenarHelper thelper;
+	private String helpSTR = "<b>OH! Brillantes!!! </b>\n-\n" + "<b>/tienda</b> -- Ver categorias.\n"
+			+ "<b>/tienda X</b> -- Lista categoria.\n" + "<b>/tienda XXXX</b>-- Objeto.\n";
 
-	public ThalantyrBot() {
-		thelper = new ThalantyrHelper();
+	public CespenarBot() {
+		thelper = new CespenarHelper();
 	}
 
 	@Override
@@ -31,18 +29,19 @@ public class ThalantyrBot extends TelegramLongPollingBot {
 			int user_id = update.getMessage().getFrom().getId();
 			String userName = update.getMessage().getFrom().getUserName();
 			String userInputString = update.getMessage().getText();
-			// debug
-			System.out.println("chatID: " + chat_id);
-			System.out.println(userName + "(" + chat_id + ") ->  " + userInputString);
-			// <-
-			
-			if (user_id == 00) {
+			System.out.println(userName + "(" + user_id + ") ->  " + userInputString);
+
+			// Si el user no esta en la BD
+			// if (!thelper.isDBClient(user_id)) {
+			if (0 == 1) {
 				System.out.println("Usuario no valido");
 				kickAcoplado(user_id, chat_id);
-			} else {
+			}
+			// Usuario en la BD
+			else {
 				// Tokenizer del string input para enumerar argumentos
 				ArrayList<String> userInput = getInputArray(userInputString);
-				
+
 				String cmd = getCommand(userInput);
 				if (userInput.get(0).equals("/tienda")) {
 					String outStringTienda = thelper.CMDtienda(chat_id, userInput);
@@ -51,18 +50,16 @@ public class ThalantyrBot extends TelegramLongPollingBot {
 					} else {
 						enviarError(chat_id);
 					}
-				} else if(userInput.get(0).equals("/help")) {
+				} else if (userInput.get(0).equals("/help")) {
 					enviarMensaje(chat_id, helpSTR);
-				} else {
-					enviarError(chat_id);
 				}
 			}
 		}
 	}
-	
+
 	/*
-	 * Devuelve un array de strings segun espacios (tokenizer),
-	 * de esta forma se manejan mejor los argumentos.
+	 * Devuelve un array de strings segun espacios (tokenizer), de esta forma se
+	 * manejan mejor los argumentos.
 	 */
 	public ArrayList<String> getInputArray(String msj) {
 		StringTokenizer st = new StringTokenizer(msj);
@@ -84,10 +81,9 @@ public class ThalantyrBot extends TelegramLongPollingBot {
 				return p.get(0);
 			}
 		}
-		
 		return null;
 	}
-	
+
 	/*
 	 * Kickea un id dado
 	 */
@@ -100,10 +96,9 @@ public class ThalantyrBot extends TelegramLongPollingBot {
 			return true;
 		} catch (TelegramApiException e) {
 			return false;
-			
 		}
-		
 	}
+
 	/*
 	 * Enviar un texto
 	 */

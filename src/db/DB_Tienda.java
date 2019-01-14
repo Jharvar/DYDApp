@@ -8,19 +8,26 @@ import java.util.ArrayList;
 import clases.Armaduras;
 import clases.Armas;
 import clases.Categorias;
-import clases.ObjetosBasicos;
+import clases.Jugadores;
+import clases.ObjetoMaravilloso;
+import clases.ObjetoBasico;
 
 public class DB_Tienda extends DB {
 
 	// Atributos de la clase para obtener objetos únicos
 	private Armas weapon;
 	private Armaduras armor;
-	private ObjetosBasicos basicObject;
+	private ObjetoBasico basicObject;
+	private ObjetoMaravilloso magicObject;
+
 	// Atributos de la clase
 	private ArrayList<Categorias> listaCategorias;
 	private ArrayList<Armas> listaArmas;
 	private ArrayList<Armaduras> listaArmaduras;
-	private ArrayList<ObjetosBasicos> listaObjetosBasicos;
+	private ArrayList<ObjetoBasico> listaObjetosBasicos;
+	private ArrayList<ObjetoMaravilloso> listaObjetosMaravillosos;
+
+	private ArrayList<Jugadores> listaJugadores;
 
 	// Atributos de operaciones
 	private Conexion conexion;
@@ -29,8 +36,13 @@ public class DB_Tienda extends DB {
 
 	public DB_Tienda() {
 		conexion = new Conexion();
-
+		listaJugadores = getJugadores();
 	}
+
+	/**
+	 * 
+	 * @return {@link ArrayList}
+	 */
 
 	public ArrayList<Categorias> keepCategories() {
 		try {
@@ -54,7 +66,7 @@ public class DB_Tienda extends DB {
 	/**
 	 * 
 	 * @param id_objeto
-	 * @return ArrayList<?>
+	 * @return {@link ArrayList}
 	 * @throws SQLException
 	 */
 
@@ -73,8 +85,8 @@ public class DB_Tienda extends DB {
 				rs = st.executeQuery("SELECT * FROM objetos_basicos");
 				return keepBasicObjects(rs);
 			case 4:
-				return null;
-
+				rs = st.executeQuery("SELECT * FROM objeto_maravilloso");
+				return keepMagicObject(rs);
 			}
 			return null;
 		} catch (SQLException e) {
@@ -85,7 +97,7 @@ public class DB_Tienda extends DB {
 
 	/**
 	 * @param rs
-	 * @return ArrayList<Armas>
+	 * @return {@link ArrayList}
 	 * @throws SQLException
 	 */
 
@@ -104,7 +116,7 @@ public class DB_Tienda extends DB {
 
 	/**
 	 * @param rs
-	 * @return ArrayList<Armaduras>
+	 * @return {@link ArrayList}
 	 * @throws SQLException
 	 */
 	public ArrayList<Armaduras> keepArmors(ResultSet rs) throws SQLException {
@@ -123,13 +135,13 @@ public class DB_Tienda extends DB {
 	/**
 	 * 
 	 * @param rs
-	 * @return ArrayList<ObjetosBasicos>
+	 * @return {@link ArrayList}
 	 * @throws SQLException
 	 */
-	public ArrayList<ObjetosBasicos> keepBasicObjects(ResultSet rs) throws SQLException {
+	public ArrayList<ObjetoBasico> keepBasicObjects(ResultSet rs) throws SQLException {
 		listaObjetosBasicos = new ArrayList<>();
 		while (rs.next()) {
-			listaObjetosBasicos.add(new ObjetosBasicos(rs.getInt("id_objetos"), rs.getString("nombre"),
+			listaObjetosBasicos.add(new ObjetoBasico(rs.getInt("id_objetos"), rs.getString("nombre"),
 					rs.getInt("precio"), rs.getInt("peso"), rs.getString("danio"), rs.getString("curacion"),
 					rs.getString("descripcion")));
 		}
@@ -141,11 +153,32 @@ public class DB_Tienda extends DB {
 
 	/**
 	 * 
-	 * @param categoria
-	 * @param id_objeto
-	 * @return Object
+	 * @param rs
+	 * @return {@link ArrayList}
 	 * @throws SQLException
 	 */
+
+	public ArrayList<ObjetoMaravilloso> keepMagicObject(ResultSet rs) throws SQLException {
+		listaObjetosMaravillosos = new ArrayList<>();
+		while (rs.next()) {
+			listaObjetosMaravillosos.add(new ObjetoMaravilloso(rs.getInt("id_objeto_maravilloso"),
+					rs.getString("nombre"), rs.getInt("precio"), rs.getInt("peso"), rs.getString("tipo_de_objeto"),
+					rs.getString("descripcion")));
+		}
+		rs.close();
+		st.close();
+		conexion.closeConexion();
+		return listaObjetosMaravillosos;
+	}
+
+	/**
+	 * 
+	 * @param categoria
+	 * @param id_objeto
+	 * @return {@link Object}
+	 * 
+	 */
+
 	public Object getObjectToCategoria(int categoria, int id_objeto) {
 		switch (categoria) {
 		case 1:
@@ -154,15 +187,23 @@ public class DB_Tienda extends DB {
 			return getArmor(id_objeto);
 		case 3:
 			return getBasicObject(id_objeto);
+		case 4:
+
+			return getMagicObject(id_objeto);
+
 		}
 		return null;
 	}
 
 	/**
 	 * 
+	 * 
 	 * @param id_objeto
-	 * @return Armas
-	 * @throws SQLException
+	 * 
+	 * @param id_objeto
+	 * 
+	 * @return {@link Armas}
+	 * 
 	 */
 	public Armas getWeapon(int id_objeto) {
 		try {
@@ -190,10 +231,10 @@ public class DB_Tienda extends DB {
 	/**
 	 * 
 	 * @param id_objeto
-	 * @return Armaduras
-	 * @throws SQLException
+	 * @return {@link Armaduras}
+	 * 
 	 */
-	public Armaduras getArmor(int id_objeto){
+	public Armaduras getArmor(int id_objeto) {
 		try {
 			conexion.openConexion();
 			st = conexion.openConexion().createStatement();
@@ -211,29 +252,107 @@ public class DB_Tienda extends DB {
 			System.out.println(e.getMessage());
 			return null;
 		}
-		
+
 	}
 
 	/**
 	 * 
 	 * @param id_objeto
-	 * @return ObjectosBasicos
-	 * @throws SQLException
+	 * @return {@link ObjetoBasico}
+	 * 
 	 */
-	public ObjetosBasicos getBasicObject(int id_objeto) {
+	public ObjetoBasico getBasicObject(int id_objeto) {
 		try {
 			conexion.openConexion();
 			st = conexion.openConexion().createStatement();
 			rs = st.executeQuery("SELECT * FROM objetos_basicos WHERE id_objetos='" + id_objeto + "'");
 			if (rs.first()) {
-				basicObject = new ObjetosBasicos(rs.getInt("id_objetos"), rs.getString("nombre"), rs.getInt("precio"),
-						rs.getInt("peso"), rs.getString("danio"), rs.getString("curacion"), rs.getString("descripcion"));
+				basicObject = new ObjetoBasico(rs.getInt("id_objetos"), rs.getString("nombre"), rs.getInt("precio"),
+						rs.getInt("peso"), rs.getString("danio"), rs.getString("curacion"),
+						rs.getString("descripcion"));
 			}
 			return basicObject;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return null;
+
 		}
-		
+
+	}
+
+	/**
+	 * 
+	 * @param id_objeto
+	 * @return {@link ObjetoMaravilloso}
+	 */
+
+	public ObjetoMaravilloso getMagicObject(int id_objeto) {
+		try {
+			conexion.openConexion();
+			st = conexion.openConexion().createStatement();
+			rs = st.executeQuery("SELECT * FROM objeto_maravilloso WHERE id_objeto_maravilloso='" + id_objeto + "'");
+			if (rs.first()) {
+				magicObject = new ObjetoMaravilloso(rs.getInt("id_objeto_maravilloso"), rs.getString("nombre"),
+						rs.getInt("precio"), rs.getInt("peso"), rs.getString("tipo_de_objeto"),
+						rs.getString("descripcion"));
+			}
+			return magicObject;
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+
+	/**
+	 * 
+	 * @return {@link ArrayList}
+	 */
+	public ArrayList<Jugadores> getJugadores() {
+		try {
+			listaJugadores = new ArrayList<>();
+			conexion.openConexion();
+			st = conexion.openConexion().createStatement();
+			rs = st.executeQuery("SELECT * FROM jugadores");
+			while (rs.next()) {
+				listaJugadores.add(new Jugadores(rs.getInt("id_jugador"), rs.getString("personaje"),
+						rs.getString("clase"), rs.getString("dinero")));
+
+			}
+
+			rs.close();
+			st.close();
+			conexion.closeConexion();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return listaJugadores;
+
+	}
+
+	/**
+	 * 
+	 * @param user
+	 * @param money
+	 * @return <code>true</code>
+	 */
+
+	public boolean isClient(int chatId) {
+		if (listaJugadores.isEmpty()) {
+			listaJugadores = getJugadores();
+			for (int i = 0; i < listaJugadores.size(); i++) {
+				if (chatId == listaJugadores.get(i).getIdPersonaje()) {
+					return true;
+				}
+			}
+		} else {
+			for (int i = 0; i < listaJugadores.size(); i++) {
+				if (chatId == listaJugadores.get(i).getIdPersonaje()) {
+					return true;
+				}
+			}
+			return false;
+		}
+		return false;
 	}
 }
