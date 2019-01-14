@@ -35,7 +35,7 @@ public class ThalantyrHelper {
 	 * Muestra listado de categorias disponibles.
 	 */
 	public String getCategories(long chat_id, ArrayList<String> userInput) {
-		String msj = "";
+		String msj = "\"Cespenar sirve siempre al magnifico\".\n-\n";
 		ArrayList<Categorias> categorias = tiendaDB.keepCategories();
 		for (Categorias c : categorias) {
 			msj += c.toStringTiendaHtml();
